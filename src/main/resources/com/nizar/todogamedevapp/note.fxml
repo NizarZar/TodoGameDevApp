@@ -8,13 +8,16 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nizar.todogamedevapp.NoteController">
    <children>
-      <TextArea fx:id="noteArea" layoutX="71.0" layoutY="42.0" prefHeight="222.0" prefWidth="218.0" />
-      <Text layoutX="143.0" layoutY="351.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add your note on the text area" wrappingWidth="292.08984375">
+      <TextArea fx:id="noteArea" layoutX="87.0" layoutY="60.0" prefHeight="273.0" prefWidth="427.0" />
+      <Text layoutX="182.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add your note on the text area" wrappingWidth="235.08984375">
          <font>
             <Font size="17.0" />
          </font>
       </Text>
-      <Button layoutX="316.0" layoutY="239.0" mnemonicParsing="false" onAction="#addNote" text="Add" />
+      <Button layoutX="244.0" layoutY="342.0" mnemonicParsing="false" onAction="#addNote" prefHeight="44.0" prefWidth="112.0" text="Add">
+         <font>
+            <Font size="20.0" />
+         </font></Button>
       <Text fx:id="addedNote" layoutX="335.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0">
          <font>
             <Font size="20.0" />

@@ -37,8 +37,20 @@ public class MainController {
         stage.show();
 
     }
+
+    public void onLogout(ActionEvent event) throws IOException{
+        System.out.println("Logged out!");
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login.fxml")));
+
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
     public void displayNote1(String text){
         noteLabel.setText(text);
+
+
     }
 
 
