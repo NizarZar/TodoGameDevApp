@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -24,7 +25,7 @@ public class MainController {
 
 
     @FXML
-    Label noteLabel = new Label();
+    ListView listView = new ListView();
 
     public void addNote(ActionEvent event) throws IOException {
         System.out.println("Note Add Button Clicked");
@@ -47,8 +48,10 @@ public class MainController {
         stage.setScene(scene);
         stage.show();
     }
-    public void displayNote1(String text){
-        noteLabel.setText(text);
+    public void displayNote(String text){
+        Label newLabel = new Label();
+        newLabel.setText(text);
+        listView.getItems().add(newLabel);
 
 
     }

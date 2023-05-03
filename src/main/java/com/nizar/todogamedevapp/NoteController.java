@@ -28,7 +28,7 @@ public class NoteController {
         root = loader.load();
 
         MainController mainController = loader.getController();
-        mainController.displayNote1(noteText);
+        mainController.displayNote(noteText);
 
         System.out.println("Note added");
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
