@@ -56,6 +56,17 @@ public class MainController {
 
     }
 
+    public void onCheck(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("noteslist.fxml"));
+        Parent root = loader.load();
+        NotesListController notesListController = loader.getController();
+        notesListController.addText();
+
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
 
 
 }
