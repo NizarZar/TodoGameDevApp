@@ -27,10 +27,10 @@ public class Main extends Application {
         stage.setResizable(false);
         stage.setTitle("Game Dev Todo App Login");
         stage.show();
-        stage.setOnCloseRequest(event -> {
-            event.consume();
-            onExit(stage);
-        });
+        //stage.setOnCloseRequest(event -> {
+           // event.consume();
+            //onExit(stage);
+       // });
     }
 
     public static void main(String[] args) {
