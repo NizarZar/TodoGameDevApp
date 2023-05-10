@@ -1,19 +1,13 @@
 package com.nizar.todogamedevapp;
 
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.util.Objects;
 
@@ -23,10 +17,10 @@ public class MainController {
     private Scene scene;
     private Parent root;
 
-
-    // TODO: FIX LISTVIEW NOT SHOWING
+    // TODO: FIX MAINCONTROLLER RESETTING EACH TIME
     @FXML
-    static ListView listView = new ListView();
+    ListView listView;
+
 
     public void addNote(ActionEvent event) throws IOException {
         System.out.println("Note Add Button Clicked");
