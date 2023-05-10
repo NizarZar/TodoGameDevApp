@@ -13,6 +13,7 @@
          </font>
       </Button>
       <Button layoutX="452.0" layoutY="367.0" mnemonicParsing="false" onAction="#onLogout" text="Log-out" />
-      <ListView fx:id="listView" layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" />
+      <ListView fx:id="listView" editable="true" layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" />
+      <Button layoutX="392.0" layoutY="214.0" mnemonicParsing="false" onAction="#onCheck" text="Button" />
    </children>
 </AnchorPane>

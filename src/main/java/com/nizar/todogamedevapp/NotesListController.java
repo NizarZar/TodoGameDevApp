@@ -2,17 +2,15 @@ package com.nizar.todogamedevapp;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.text.Text;
 
 public class NotesListController {
 
     @FXML
-    Label label = new Label();
+    Text text = new Text();
 
-    public void addText(){
-        for(String s : TodoAdded.hashMapNotes.keySet()){
-                label.setText(TodoAdded.hashMapNotes.get(s));
-        }
-
+    public void addText(String title){
+        text.setText(TodoAdded.hashMapNotes.get(title));
     }
 
 

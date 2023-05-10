@@ -24,8 +24,9 @@ public class MainController {
     private Parent root;
 
 
+    // TODO: FIX LISTVIEW NOT SHOWING
     @FXML
-    ListView listView = new ListView();
+    static ListView listView = new ListView();
 
     public void addNote(ActionEvent event) throws IOException {
         System.out.println("Note Add Button Clicked");
@@ -49,10 +50,8 @@ public class MainController {
         stage.show();
     }
     public void displayNote(String text){
-        Label newLabel = new Label();
-        newLabel.setText(text);
-        listView.getItems().add(newLabel);
-
+        listView.getItems().add(text);
+        listView.setVisible(true);
 
     }
 
@@ -60,7 +59,7 @@ public class MainController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("noteslist.fxml"));
         Parent root = loader.load();
         NotesListController notesListController = loader.getController();
-        notesListController.addText();
+        notesListController.addText(listView.getSelectionModel().getSelectedItem().toString());
 
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
