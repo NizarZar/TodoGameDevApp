@@ -27,24 +27,24 @@ public class NoteController {
     @FXML
     CheckBox featureCheck = new CheckBox();
 
-    TodoAdded todoAdded = new TodoAdded();
-
-
     private Stage stage;
     private Scene scene;
     private Parent root;
 
     public void addNote(ActionEvent event) throws IOException {
 
-        String noteText = noteArea.getText();
         String noteTitle = titleArea.getText();
+        String noteText = noteArea.getText();
+
+        TodoNote todoNote = new TodoNote(noteTitle,noteText);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("main-view.fxml"));
         root = loader.load();
 
+
         MainController mainController = loader.getController();
         mainController.displayNote(noteTitle);
-        todoAdded.addText(noteTitle,noteText);
-        
+        TodoAdded.addText(todoNote);
+
 
         System.out.println("Note added");
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
