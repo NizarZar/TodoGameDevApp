@@ -31,14 +31,15 @@ public class NoteController {
     private Scene scene;
     private Parent root;
 
+
     public void addNote(ActionEvent event) throws IOException {
 
         String noteTitle = titleArea.getText();
         String noteText = noteArea.getText();
 
         TodoNote todoNote = new TodoNote(noteTitle,noteText);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("main-view.fxml"));
-        root = loader.load();
+        FXMLLoader loader = MainSingleton.getInstance().mainFXML;
+        root = MainSingleton.getInstance().root;
 
 
         MainController mainController = loader.getController();
@@ -48,7 +49,7 @@ public class NoteController {
 
         System.out.println("Note added");
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
+        scene = root.getScene();
         stage.setTitle("Game Dev Todo App");
         stage.setScene(scene);
         stage.show();

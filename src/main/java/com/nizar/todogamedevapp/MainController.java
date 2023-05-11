@@ -19,8 +19,7 @@ public class MainController {
 
     // TODO: FIX MAINCONTROLLER RESETTING EACH TIME
     @FXML
-    ListView listView;
-
+    ListView<String> listView;
 
     public void addNote(ActionEvent event) throws IOException {
         System.out.println("Note Add Button Clicked");
@@ -47,13 +46,14 @@ public class MainController {
         listView.getItems().add(text);
         listView.setVisible(true);
 
+
     }
 
     public void onCheck(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("noteslist.fxml"));
         Parent root = loader.load();
         NotesListController notesListController = loader.getController();
-        notesListController.addText(listView.getSelectionModel().getSelectedItem().toString());
+        notesListController.addText(listView.getSelectionModel().getSelectedItem());
 
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
