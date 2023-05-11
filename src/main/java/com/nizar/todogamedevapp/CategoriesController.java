@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class CategoriesController {
 
@@ -23,8 +24,11 @@ public class CategoriesController {
     private Scene scene;
     private Stage stage;
 
+    private static ArrayList<String> categories = new ArrayList<>();
+
     public void onAddCategory(){
         categoriesListView.getItems().add(categoryTextField.getText());
+        categories.add(categoryTextField.getText());
         categoryTextField.setText("");
     }
 
@@ -36,6 +40,10 @@ public class CategoriesController {
         stage.setScene(scene);
         stage.show();
 
+    }
+
+    public static ArrayList<String> getCategories(){
+        return categories;
     }
 
 

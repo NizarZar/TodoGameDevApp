@@ -23,12 +23,7 @@ public class NoteController {
     TextField titleArea;
 
     @FXML
-    CheckBox bugCheck;
-
-    @FXML
-    CheckBox featureCheck;
-
-    private ArrayList<String> category = new ArrayList<>();
+    ListView<String> categories;
 
     private Stage stage;
     private Scene scene;
@@ -36,7 +31,9 @@ public class NoteController {
 
 
     public void addNote(ActionEvent event) throws IOException {
-
+        for(String category : CategoriesController.getCategories()){
+            categories.getItems().add(category);
+        }
         String noteTitle = titleArea.getText();
         String noteText = noteArea.getText();
         if (!noteTitle.equals("") && !noteText.equals("")) {
@@ -45,7 +42,7 @@ public class NoteController {
             root = MainSingleton.getInstance().root;
             MainController mainController = loader.getController();
             mainController.addNoteItem(noteTitle);
-            TodoAdded.addText(todoNote);
+            TodoAdded.addText(todoNote, categories.getSelectionModel().getSelectedItem());
 
 
             System.out.println("Note added");

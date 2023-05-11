@@ -28,7 +28,6 @@ public class MainController {
         stage.setTitle("Note Add");
         stage.setScene(scene);
         stage.show();
-
     }
 
     public void onLogout(ActionEvent event) throws IOException{
