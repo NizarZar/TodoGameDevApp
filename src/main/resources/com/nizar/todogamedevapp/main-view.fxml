@@ -15,5 +15,7 @@
       <Button layoutX="452.0" layoutY="367.0" mnemonicParsing="false" onAction="#onLogout" text="Log-out" />
       <ListView fx:id="listView" editable="true" layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" />
       <Button layoutX="53.0" layoutY="222.0" mnemonicParsing="false" onAction="#onCheck" text="Show Selected Note" />
+      <Button layoutX="115.0" layoutY="363.0" mnemonicParsing="false" onAction="#deleteNoteItem" prefHeight="34.0" prefWidth="89.0" text="Delete Note" />
+      <Button layoutX="414.0" layoutY="14.0" mnemonicParsing="false" onAction="#onOpenCategories" prefHeight="34.0" prefWidth="76.0" text="Categories" />
    </children>
 </AnchorPane>

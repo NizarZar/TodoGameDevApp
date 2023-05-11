@@ -1,6 +1,5 @@
 package com.nizar.todogamedevapp;
 
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,21 +10,25 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Objects;
+import java.util.ArrayList;
+
+// class that control note /todo adding
 
 public class NoteController {
 
     @FXML
-    TextArea noteArea = new TextArea();
+    TextArea noteArea;
 
     @FXML
-    TextField titleArea = new TextField();
+    TextField titleArea;
 
     @FXML
-    CheckBox bugCheck = new CheckBox();
+    CheckBox bugCheck;
 
     @FXML
-    CheckBox featureCheck = new CheckBox();
+    CheckBox featureCheck;
+
+    private ArrayList<String> category = new ArrayList<>();
 
     private Stage stage;
     private Scene scene;
@@ -41,14 +44,14 @@ public class NoteController {
             FXMLLoader loader = MainSingleton.getInstance().mainFXML;
             root = MainSingleton.getInstance().root;
             MainController mainController = loader.getController();
-            mainController.displayNote(noteTitle);
+            mainController.addNoteItem(noteTitle);
             TodoAdded.addText(todoNote);
 
 
             System.out.println("Note added");
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = root.getScene();
-            stage.setTitle("Game Dev Todo App");
+            stage.setTitle("Game Dev Todo and Note App");
             stage.setScene(scene);
             stage.show();
         } else {

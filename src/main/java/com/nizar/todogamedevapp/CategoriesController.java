@@ -2,34 +2,32 @@ package com.nizar.todogamedevapp;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.text.Text;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class NotesListController {
+public class CategoriesController {
 
     @FXML
-    Text text = new Text();
+    TextField categoryTextField;
 
     @FXML
-    Button backButton;
+    ListView<String> categoriesListView;
 
     private Parent root;
-    private Stage stage;
     private Scene scene;
+    private Stage stage;
 
-    public void addText(String title){
-        text.setText(TodoAdded.getHashMapNotes().get(title));
+    public void onAddCategory(){
+        categoriesListView.getItems().add(categoryTextField.getText());
+        categoryTextField.setText("");
     }
 
-    // maincontroller values are reset - to fix
     public void onBack(ActionEvent event) throws IOException {
         root = MainSingleton.getInstance().root;
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
