@@ -31,10 +31,10 @@ public class NotesListController {
 
     // maincontroller values are reset - to fix
     public void onBack(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("main-view.fxml"));
-        root = loader.load();
+        FXMLLoader loader = MainSingleton.getInstance().mainFXML;
+        root = MainSingleton.getInstance().root;
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
+        scene = root.getScene();
         stage.setScene(scene);
         stage.show();
 
