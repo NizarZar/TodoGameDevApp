@@ -31,27 +31,29 @@ public class NoteController {
     private Scene scene;
     private Parent root;
 
+
     public void addNote(ActionEvent event) throws IOException {
 
         String noteTitle = titleArea.getText();
         String noteText = noteArea.getText();
-
-        TodoNote todoNote = new TodoNote(noteTitle,noteText);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("main-view.fxml"));
-        root = loader.load();
-
-
-        MainController mainController = loader.getController();
-        mainController.displayNote(noteTitle);
-        TodoAdded.addText(todoNote);
+        if (!noteTitle.equals("") && !noteText.equals("")) {
+            TodoNote todoNote = new TodoNote(noteTitle, noteText);
+            FXMLLoader loader = MainSingleton.getInstance().mainFXML;
+            root = MainSingleton.getInstance().root;
+            MainController mainController = loader.getController();
+            mainController.displayNote(noteTitle);
+            TodoAdded.addText(todoNote);
 
 
-        System.out.println("Note added");
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setTitle("Game Dev Todo App");
-        stage.setScene(scene);
-        stage.show();
+            System.out.println("Note added");
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = root.getScene();
+            stage.setTitle("Game Dev Todo App");
+            stage.setScene(scene);
+            stage.show();
+        } else {
+            throw new IllegalArgumentException("Text or title cannot be empty!");
+        }
     }
 
 
