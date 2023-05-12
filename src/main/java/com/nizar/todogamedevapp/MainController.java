@@ -22,42 +22,56 @@ public class MainController {
     ListView<String> listView;
 
     public void addNote(ActionEvent event) throws IOException {
-        System.out.println("Note Add Button Clicked");
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("note.fxml")));
-
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("note.fxml")));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setTitle("Note Add");
         stage.setScene(scene);
         stage.show();
-
     }
 
     public void onLogout(ActionEvent event) throws IOException{
         System.out.println("Logged out!");
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login.fxml")));
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login.fxml")));
 
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
-    public void displayNote(String text){
+    public void addNoteItem(String text){
         listView.getItems().add(text);
-        listView.setVisible(true);
-
-
     }
 
     public void onCheck(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("noteslist.fxml"));
-        Parent root = loader.load();
+        root = loader.load();
         NotesListController notesListController = loader.getController();
         notesListController.addText(listView.getSelectionModel().getSelectedItem());
 
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
+    }
+
+    public void deleteNoteItem(){
+        System.out.println("Note deleted");
+        listView.getItems().remove(listView.getSelectionModel().getSelectedItem());
+    }
+
+    public void onOpenCategories(ActionEvent event) throws IOException {
+        //FXMLLoader categoriesLoader = CategoriesSingleton.getInstance().categoriesFXML;
+        root = CategoriesSingleton.getInstance().root;
+        //CategoriesController categoriesController = categoriesLoader.getController();
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(root.getScene());
+        stage.show();
+
+        //FXMLLoader loader = new FXMLLoader(getClass().getResource("categories.fxml"));
+        //root = loader.load();
+        //stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        //stage.setScene(new Scene(root));
+        //stage.show();
     }
 
 
