@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 public class TodoAdded {
 
+
+        // TODO: Change HashMap to another Data Structure to store repeated title
         private static HashMap<String, String> hashMapNotes = new HashMap<>();
         private static HashMap<String, String> hashmapTitleCategory = new HashMap<>();
 

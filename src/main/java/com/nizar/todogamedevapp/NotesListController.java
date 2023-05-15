@@ -19,6 +19,7 @@ public class NotesListController {
     @FXML
     Button backButton;
 
+    // TODO: FIX TEXT NOT APPEARING
     public void addText(String title){
         text.setText(TodoAdded.getHashMapNotes().get(title));
     }
@@ -26,6 +27,7 @@ public class NotesListController {
     public void onBack(ActionEvent event) throws IOException {
         Parent root = MainSingleton.getInstance().root;
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        System.out.println(TodoAdded.getHashMapNotes().values());
         stage.setTitle("Game Dev Todo and Note App");
         Scene scene = root.getScene();
         stage.setScene(scene);
