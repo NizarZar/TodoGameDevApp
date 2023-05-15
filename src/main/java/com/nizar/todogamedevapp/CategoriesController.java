@@ -36,6 +36,7 @@ public class CategoriesController {
     }
     public void onDeleteCategory(){
         categoriesListView.getItems().remove(categoriesListView.getSelectionModel().getSelectedItem());
+        CategoriesSingleton.getCategories().remove(categoriesListView.getSelectionModel().getSelectedItem());
     }
 
 

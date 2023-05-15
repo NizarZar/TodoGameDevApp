@@ -127,6 +127,7 @@ public class MainController implements Initializable {
                     categoriesChoiceSort.getItems().add(category);
                 }
             }
+            categoriesChoiceSort.getItems().removeIf(dCategory -> !CategoriesSingleton.getCategories().contains(dCategory));
         }
     };
 }
