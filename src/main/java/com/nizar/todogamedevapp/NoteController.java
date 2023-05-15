@@ -24,6 +24,16 @@ public class NoteController implements Initializable {
     @FXML
     ListView<String> categories;
 
+    public void onBack(ActionEvent event) throws IOException {
+        Parent root = MainSingleton.getInstance().root;
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Game Dev Todo and Note App");
+        Scene scene = root.getScene();
+        stage.setScene(scene);
+        stage.show();
+    }
+
+
     public void addNote(ActionEvent event) throws IOException {
         // stage, scene and root
         // category selected

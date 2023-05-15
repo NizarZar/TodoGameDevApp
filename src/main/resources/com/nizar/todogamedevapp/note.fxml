@@ -16,9 +16,9 @@
             <Font size="17.0" />
          </font>
       </Text>
-      <Button layoutX="404.0" layoutY="288.0" mnemonicParsing="false" onAction="#addNote" prefHeight="44.0" prefWidth="77.0" text="Add">
+      <Button layoutX="223.0" layoutY="346.0" mnemonicParsing="false" onAction="#addNote" prefHeight="23.0" prefWidth="77.0" text="Add">
          <font>
-            <Font size="20.0" />
+            <Font size="14.0" />
          </font></Button>
       <Text fx:id="addedNote" layoutX="335.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0">
          <font>
@@ -27,5 +27,6 @@
       </Text>
       <TextField fx:id="titleArea" layoutX="118.0" layoutY="96.0" prefHeight="25.0" prefWidth="277.0" promptText="Title" />
       <ListView fx:id="categories" layoutX="14.0" layoutY="109.0" prefHeight="200.0" prefWidth="65.0" />
+      <Button layoutX="513.0" layoutY="361.0" mnemonicParsing="false" onAction="#onBack" text="Back" />
    </children>
 </AnchorPane>

@@ -35,5 +35,11 @@ public class CategoriesController {
         stage.show();
     }
 
+    //TODO: When deleting it always delete first one on ChoiceBox
+    public void onDeleteCategory(){
+        categoriesListView.getItems().remove(categoriesListView.getSelectionModel().getSelectedItem());
+        CategoriesSingleton.getCategories().remove(categoriesListView.getSelectionModel().getSelectedItem());
+    }
+
 
 }
