@@ -3,18 +3,17 @@ package com.nizar.todogamedevapp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-
 import java.io.IOException;
-import java.util.ArrayList;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-// class that control note /todo adding
-
-public class NoteController {
+public class NoteController implements Initializable {
 
     @FXML
     TextArea noteArea;
@@ -25,25 +24,27 @@ public class NoteController {
     @FXML
     ListView<String> categories;
 
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
-
-
     public void addNote(ActionEvent event) throws IOException {
-        for(String category : CategoriesController.getCategories()){
-            categories.getItems().add(category);
-        }
+        System.out.println(categories.getItems().toString());
+        System.out.println(CategoriesSingleton.getCategories().toString());
+        Stage stage;
+        Scene scene;
+        Parent root;
         String noteTitle = titleArea.getText();
         String noteText = noteArea.getText();
+        // check if noteTitle or notetext are not empty
         if (!noteTitle.equals("") && !noteText.equals("")) {
-            TodoNote todoNote = new TodoNote(noteTitle, noteText);
+            // get selected category
+            String categorySelected = categories.getSelectionModel().getSelectedItem();
+            // create the note with the title, text body and category parameters
+            TodoNote todoNote = new TodoNote(noteTitle, noteText, categorySelected);
+            // add it to the main scene singleton that shows all notes
             FXMLLoader loader = MainSingleton.getInstance().mainFXML;
             root = MainSingleton.getInstance().root;
             MainController mainController = loader.getController();
-            mainController.addNoteItem(noteTitle);
-            TodoAdded.addText(todoNote, categories.getSelectionModel().getSelectedItem());
-
+            mainController.addNoteItem(noteTitle + " (" + categorySelected + ")");
+            // store the note data
+            TodoAdded.addText(todoNote, categorySelected);
 
             System.out.println("Note added");
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -56,8 +57,10 @@ public class NoteController {
         }
     }
 
-
-
-
-
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        for(String category : CategoriesSingleton.getCategories()){
+            categories.getItems().add(category);
+        }
+    }
 }

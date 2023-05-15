@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -25,8 +25,7 @@
             <Font size="20.0" />
          </font>
       </Text>
-      <CheckBox fx:id="featureCheck" layoutX="14.0" layoutY="108.0" mnemonicParsing="false" text="Feature" />
-      <CheckBox fx:id="bugCheck" layoutX="14.0" layoutY="142.0" mnemonicParsing="false" text="Bug" />
       <TextField fx:id="titleArea" layoutX="118.0" layoutY="96.0" prefHeight="25.0" prefWidth="277.0" promptText="Title" />
+      <ListView fx:id="categories" layoutX="14.0" layoutY="109.0" prefHeight="200.0" prefWidth="65.0" />
    </children>
 </AnchorPane>

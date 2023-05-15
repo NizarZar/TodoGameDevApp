@@ -9,9 +9,8 @@ public class TodoAdded {
 
         public static void addText(TodoNote todonote, String category){
             hashMapNotes.put(todonote.getTitle(), todonote.getText());
-            hashmapTitleCategory.put(todonote.getTitle(),category);
+            hashmapTitleCategory.put(todonote.getTitle(), category);
         }
-
     public static HashMap<String, String> getHashMapNotes() {
         return hashMapNotes;
     }

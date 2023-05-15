@@ -4,9 +4,11 @@ public class TodoNote {
 
     private String title;
     private String text;
-    public TodoNote(String title, String text){
+    private String category;
+    public TodoNote(String title, String text, String category){
         this.title = title;
         this.text = text;
+        this.category = category;
     }
 
     public String getText() {
@@ -23,5 +25,12 @@ public class TodoNote {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

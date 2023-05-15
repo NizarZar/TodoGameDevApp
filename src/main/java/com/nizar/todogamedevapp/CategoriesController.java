@@ -20,30 +20,23 @@ public class CategoriesController {
     @FXML
     ListView<String> categoriesListView;
 
-    private Parent root;
-    private Scene scene;
-    private Stage stage;
-
-    private static ArrayList<String> categories = new ArrayList<>();
 
     public void onAddCategory(){
         categoriesListView.getItems().add(categoryTextField.getText());
-        categories.add(categoryTextField.getText());
+        CategoriesSingleton.getCategories().add(categoryTextField.getText());
         categoryTextField.setText("");
     }
 
     public void onBack(ActionEvent event) throws IOException {
+        Parent root;
+        Scene scene;
+        Stage stage;
         root = MainSingleton.getInstance().root;
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         stage.setTitle("Game Dev Todo and Note App");
         scene = root.getScene();
         stage.setScene(scene);
         stage.show();
-
-    }
-
-    public static ArrayList<String> getCategories(){
-        return categories;
     }
 
 

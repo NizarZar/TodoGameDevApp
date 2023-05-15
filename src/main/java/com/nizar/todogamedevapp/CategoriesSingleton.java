@@ -4,10 +4,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class CategoriesSingleton {
 
     private static CategoriesSingleton categoriesSingleton = null;
+    private static ArrayList<String> categories = new ArrayList<>();
     public FXMLLoader categoriesFXML;
     public Parent root;
 
@@ -23,4 +25,7 @@ public class CategoriesSingleton {
         return categoriesSingleton;
     }
 
+    public static ArrayList<String> getCategories() {
+        return categories;
+    }
 }

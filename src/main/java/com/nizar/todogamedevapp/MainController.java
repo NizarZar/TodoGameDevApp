@@ -17,7 +17,6 @@ public class MainController {
     private Scene scene;
     private Parent root;
 
-    // TODO: FIX MAINCONTROLLER RESETTING EACH TIME
     @FXML
     ListView<String> listView;
 
@@ -61,19 +60,16 @@ public class MainController {
 
     public void onOpenCategories(ActionEvent event) throws IOException {
         //FXMLLoader categoriesLoader = CategoriesSingleton.getInstance().categoriesFXML;
-        root = CategoriesSingleton.getInstance().root;
+        //root = CategoriesSingleton.getInstance().root;
         //CategoriesController categoriesController = categoriesLoader.getController();
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(root.getScene());
-        stage.show();
-
-        //FXMLLoader loader = new FXMLLoader(getClass().getResource("categories.fxml"));
-        //root = loader.load();
-        //stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        //stage.setScene(new Scene(root));
+        //stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        //stage.setScene(root.getScene());
         //stage.show();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("categories.fxml"));
+        root = loader.load();
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
-
-
-
 }
