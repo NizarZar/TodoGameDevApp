@@ -27,13 +27,10 @@ public class CategoriesController {
     }
 
     public void onBack(ActionEvent event) throws IOException {
-        Parent root;
-        Scene scene;
-        Stage stage;
-        root = MainSingleton.getInstance().root;
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Parent root = MainSingleton.getInstance().root;
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         stage.setTitle("Game Dev Todo and Note App");
-        scene = root.getScene();
+        Scene scene = root.getScene();
         stage.setScene(scene);
         stage.show();
     }

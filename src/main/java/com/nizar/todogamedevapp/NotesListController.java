@@ -14,14 +14,15 @@ import java.io.IOException;
 public class NotesListController {
 
     @FXML
-    Text text = new Text();
+    Text todoTextNote;
 
     @FXML
     Button backButton;
 
     // TODO: FIX TEXT NOT APPEARING
     public void addText(String title){
-        text.setText(TodoAdded.getHashMapNotes().get(title));
+        todoTextNote.setText(TodoAdded.getHashMapNotes().get(title));
+        todoTextNote.setVisible(true);
     }
 
     public void onBack(ActionEvent event) throws IOException {

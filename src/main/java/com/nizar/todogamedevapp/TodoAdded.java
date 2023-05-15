@@ -11,7 +11,7 @@ public class TodoAdded {
 
         public static void addText(TodoNote todonote){
             hashMapNotes.put(todonote.getTitle(), todonote.getText());
-            hashmapTitleCategory.put(todonote.getCategory(), todonote.getTitle());
+            hashmapTitleCategory.put(todonote.getTitle(), todonote.getCategory());
         }
     public static HashMap<String, String> getHashMapNotes() {
         return hashMapNotes;

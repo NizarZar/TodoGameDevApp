@@ -6,7 +6,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nizar.todogamedevapp.NotesListController">
    <children>
-      <Text fx:id="text" layoutX="14.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="38.13671875" />
+      <Text fx:id="todoTextNote" layoutX="14.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="38.13671875" />
       <Button fx:id="backButton" layoutX="515.0" layoutY="361.0" mnemonicParsing="false" onAction="#onBack" text="Back" />
    </children>
 </AnchorPane>
