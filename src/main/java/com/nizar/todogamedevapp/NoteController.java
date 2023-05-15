@@ -25,17 +25,18 @@ public class NoteController implements Initializable {
     ListView<String> categories;
 
     public void addNote(ActionEvent event) throws IOException {
-        System.out.println(categories.getItems().toString());
-        System.out.println(CategoriesSingleton.getCategories().toString());
+        // stage, scene and root
         Stage stage;
         Scene scene;
         Parent root;
+        // category selected
+        String categorySelected = categories.getSelectionModel().getSelectedItem();
         String noteTitle = titleArea.getText();
         String noteText = noteArea.getText();
+        String category = categorySelected;
         // check if noteTitle or notetext are not empty
-        if (!noteTitle.equals("") && !noteText.equals("")) {
+        if (!noteTitle.equals("") && !noteText.equals("")){ //&& category != null) {
             // get selected category
-            String categorySelected = categories.getSelectionModel().getSelectedItem();
             // create the note with the title, text body and category parameters
             TodoNote todoNote = new TodoNote(noteTitle, noteText, categorySelected);
             // add it to the main scene singleton that shows all notes
@@ -44,7 +45,7 @@ public class NoteController implements Initializable {
             MainController mainController = loader.getController();
             mainController.addNoteItem(noteTitle + " (" + categorySelected + ")");
             // store the note data
-            TodoAdded.addText(todoNote, categorySelected);
+            TodoAdded.addText(todoNote);
 
             System.out.println("Note added");
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -53,14 +54,12 @@ public class NoteController implements Initializable {
             stage.setScene(scene);
             stage.show();
         } else {
-            throw new IllegalArgumentException("Text or title cannot be empty!");
+            throw new IllegalArgumentException("Text, title or category cannot be empty!");
         }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        for(String category : CategoriesSingleton.getCategories()){
-            categories.getItems().add(category);
-        }
+        categories.getItems().addAll(CategoriesSingleton.getCategories());
     }
 }
