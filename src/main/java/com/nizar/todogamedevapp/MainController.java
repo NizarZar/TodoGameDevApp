@@ -86,8 +86,9 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        categoriesChoiceSort.getItems().add("All");
+        categoriesChoiceSort.getItems().add("all");
         categoriesChoiceSort.getItems().addAll(CategoriesSingleton.getCategories());
+        categoriesChoiceSort.setVisible(true);
         animationTimer.start();
         // event when selecting from choicebox to sort
         categoriesChoiceSort.setOnAction(event -> {
@@ -104,9 +105,7 @@ public class MainController implements Initializable {
                     }
                 }
                 listView.getItems().clear();
-                for (String noteTitle : sortedHash.keySet()) {
-                    listView.getItems().add(noteTitle + " (" + TodoAdded.getHashmapTitleCategory().get(noteTitle) + ")");
-                }
+                listView.getItems().addAll(sortedHash.keySet());
             } catch (Exception e){
                 try {
                     throw new Exception("Error in choice-box sorting", e);
