@@ -33,16 +33,14 @@ public class NoteController implements Initializable {
         stage.show();
     }
 
-
     public void addNote(ActionEvent event) throws IOException {
         // stage, scene and root
         // category selected
         String categorySelected = categories.getSelectionModel().getSelectedItem();
         String noteTitle = titleArea.getText();
         String noteText = noteArea.getText();
-        String category = categorySelected;
         // check if noteTitle or notetext are not empty
-        if (!noteTitle.equals("") && !noteText.equals("")){ //&& category != null) {
+        if (!noteTitle.equals("") && !noteText.equals("")){ //&& categorySelected != null) {
             // get selected category
             // create the note with the title, text body and category parameters
             TodoNote todoNote = new TodoNote(noteTitle, noteText, categorySelected);

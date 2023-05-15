@@ -13,7 +13,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader main = MainSingleton.getInstance().mainFXML;
-        FXMLLoader categories = CategoriesSingleton.getInstance().categoriesFXML;
+        FXMLLoader categories = CategoriesSingleton.getInstance().getCategoriesFXML();
         Parent root = MainSingleton.getInstance().root;
         Scene scene = new Scene(root);
         stage.setScene(scene);

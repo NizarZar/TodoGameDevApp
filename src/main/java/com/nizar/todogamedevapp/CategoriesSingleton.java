@@ -10,8 +10,8 @@ public class CategoriesSingleton {
 
     private static CategoriesSingleton categoriesSingleton = null;
     private static ArrayList<String> categories = new ArrayList<>();
-    public FXMLLoader categoriesFXML;
-    public Parent root;
+    private FXMLLoader categoriesFXML;
+    private Parent root;
 
     private CategoriesSingleton() throws IOException {
         categoriesFXML = new FXMLLoader(getClass().getResource("categories.fxml"));
@@ -27,5 +27,13 @@ public class CategoriesSingleton {
 
     public static ArrayList<String> getCategories() {
         return categories;
+    }
+
+    public Parent getRoot() {
+        return root;
+    }
+
+    public FXMLLoader getCategoriesFXML() {
+        return categoriesFXML;
     }
 }
