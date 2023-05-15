@@ -34,6 +34,9 @@ public class CategoriesController {
         stage.setScene(scene);
         stage.show();
     }
+    public void onDeleteCategory(){
+        categoriesListView.getItems().remove(categoriesListView.getSelectionModel().getSelectedItem());
+    }
 
 
 }
