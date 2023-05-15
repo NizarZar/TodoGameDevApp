@@ -1,5 +1,6 @@
 package com.nizar.todogamedevapp;
 
+import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,8 +13,7 @@ import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class MainController implements Initializable {
 
@@ -35,10 +35,6 @@ public class MainController implements Initializable {
         stage.setTitle("Note Add");
         stage.setScene(scene);
         stage.show();
-    }
-
-    public void onCategoriesSort(){
-
     }
 
     public void onLogout(ActionEvent event) throws IOException{
@@ -90,6 +86,47 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        categoriesChoiceSort.getItems().add("All");
         categoriesChoiceSort.getItems().addAll(CategoriesSingleton.getCategories());
+        animationTimer.start();
+        // event when selecting from choicebox to sort
+        categoriesChoiceSort.setOnAction(event -> {
+            try {
+                String selectedCategory = categoriesChoiceSort.getSelectionModel().getSelectedItem();
+                HashMap<String, String> sortedHash = new HashMap<>();
+                if (selectedCategory.equalsIgnoreCase("all") || selectedCategory.equalsIgnoreCase("")) {
+                    sortedHash = TodoAdded.getHashMapNotes();
+                } else {
+                    for (String noteTitle : TodoAdded.getHashmapTitleCategory().keySet()) {
+                        if (TodoAdded.getHashmapTitleCategory().get(noteTitle).equals(selectedCategory)) {
+                            sortedHash.put(noteTitle, TodoAdded.getHashMapNotes().get(noteTitle));
+                        }
+                    }
+                }
+                listView.getItems().clear();
+                for (String noteTitle : sortedHash.keySet()) {
+                    listView.getItems().add(noteTitle + " (" + TodoAdded.getHashmapTitleCategory().get(noteTitle) + ")");
+                }
+            } catch (Exception e){
+                try {
+                    throw new Exception("Error in choice-box sorting", e);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+        System.out.println(CategoriesSingleton.getCategories());
     }
+
+    // frame updater
+    AnimationTimer animationTimer = new AnimationTimer() {
+        @Override
+        public void handle(long l) {
+            for(String category : CategoriesSingleton.getCategories()){
+                if(!categoriesChoiceSort.getItems().contains(category)){
+                    categoriesChoiceSort.getItems().add(category);
+                }
+            }
+        }
+    };
 }

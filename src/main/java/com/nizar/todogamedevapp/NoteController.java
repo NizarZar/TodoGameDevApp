@@ -26,9 +26,6 @@ public class NoteController implements Initializable {
 
     public void addNote(ActionEvent event) throws IOException {
         // stage, scene and root
-        Stage stage;
-        Scene scene;
-        Parent root;
         // category selected
         String categorySelected = categories.getSelectionModel().getSelectedItem();
         String noteTitle = titleArea.getText();
@@ -41,15 +38,15 @@ public class NoteController implements Initializable {
             TodoNote todoNote = new TodoNote(noteTitle, noteText, categorySelected);
             // add it to the main scene singleton that shows all notes
             FXMLLoader loader = MainSingleton.getInstance().mainFXML;
-            root = MainSingleton.getInstance().root;
+            Parent root = MainSingleton.getInstance().root;
             MainController mainController = loader.getController();
             mainController.addNoteItem(noteTitle + " (" + categorySelected + ")");
             // store the note data
             TodoAdded.addText(todoNote);
 
             System.out.println("Note added");
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = root.getScene();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = root.getScene();
             stage.setTitle("Game Dev Todo and Note App");
             stage.setScene(scene);
             stage.show();
