@@ -91,25 +91,34 @@ public class MainController implements Initializable {
         animationTimer.start();
         // event when selecting from choicebox to sort
         categoriesChoiceSort.setOnAction(event -> {
-            String selectedCategory = categoriesChoiceSort.getSelectionModel().getSelectedItem();
-            HashMap<String, String> sortedHash = new HashMap<>();
-            if(selectedCategory.equalsIgnoreCase("all") || selectedCategory.equalsIgnoreCase("")){
-                sortedHash = TodoAdded.getHashMapNotes();
-            } else {
-                for(String noteTitle : TodoAdded.getHashmapTitleCategory().keySet()) {
-                    if (TodoAdded.getHashmapTitleCategory().get(noteTitle).equals(selectedCategory)) {
-                        sortedHash.put(noteTitle, TodoAdded.getHashMapNotes().get(noteTitle));
+            try {
+                String selectedCategory = categoriesChoiceSort.getSelectionModel().getSelectedItem();
+                HashMap<String, String> sortedHash = new HashMap<>();
+                if (selectedCategory.equalsIgnoreCase("all") || selectedCategory.equalsIgnoreCase("")) {
+                    sortedHash = TodoAdded.getHashMapNotes();
+                } else {
+                    for (String noteTitle : TodoAdded.getHashmapTitleCategory().keySet()) {
+                        if (TodoAdded.getHashmapTitleCategory().get(noteTitle).equals(selectedCategory)) {
+                            sortedHash.put(noteTitle, TodoAdded.getHashMapNotes().get(noteTitle));
+                        }
                     }
                 }
-            }
-            listView.getItems().clear();
-            for(String noteTitle : sortedHash.keySet()){
-                listView.getItems().add(noteTitle + " (" + TodoAdded.getHashmapTitleCategory().get(noteTitle) + ")");
+                listView.getItems().clear();
+                for (String noteTitle : sortedHash.keySet()) {
+                    listView.getItems().add(noteTitle + " (" + TodoAdded.getHashmapTitleCategory().get(noteTitle) + ")");
+                }
+            } catch (Exception e){
+                try {
+                    throw new Exception("Error in choice-box sorting", e);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
         });
         System.out.println(CategoriesSingleton.getCategories());
     }
 
+    // frame updater
     AnimationTimer animationTimer = new AnimationTimer() {
         @Override
         public void handle(long l) {
