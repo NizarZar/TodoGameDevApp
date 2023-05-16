@@ -98,26 +98,33 @@ public class MainController implements Initializable {
     //TODO: NOT UPDATING IN THE SQL
     public void deleteNoteItem(){
         String selectedItem = listView.getSelectionModel().getSelectedItem();
+        System.out.println(TodoNoteData.getHashMapNotes().get(selectedItem));
+        System.out.println(TodoNoteData.getHashmapTitleCategory().get(selectedItem));
+        String sql = "DELETE FROM notes" +
+                " WHERE noteTitle = ?" +
+                    " AND noteText = ?" +
+                    " AND category = ?";
+        //debug
+        System.out.println("Note Item deleted");
         listView.getItems().remove(selectedItem);
-        String sql = "DELETE FROM notes WHERE ( noteTitle = ? ) AND ( noteText = ? ) AND ( category = ? )";
         try {
             Connection connection = this.connectNotesDB();
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, selectedItem);
             preparedStatement.setString(2,TodoNoteData.getHashMapNotes().get(selectedItem));
             preparedStatement.setString(3,TodoNoteData.getHashmapTitleCategory().get(selectedItem));
+            preparedStatement.executeUpdate();
         } catch (SQLException e){
             System.out.println(e.getMessage());
         }
-        if(TodoNoteData.getHashMapNotes().containsKey(selectedItem)){
+        if(TodoNoteData.getHashMapNotes().containsKey(selectedItem) && TodoNoteData.getHashmapTitleCategory().containsKey(selectedItem)){
             TodoNoteData.getHashMapNotes().remove(selectedItem);
             TodoNoteData.getHashmapTitleCategory().remove(selectedItem);
         }
-        //debug
-        System.out.println("Note Item deleted");
         System.out.println("AFTER DELETING:");
-        System.out.println(TodoNoteData.getHashmapTitleCategory());
-        System.out.println(TodoNoteData.getHashMapNotes());
+        System.out.println(TodoNoteData.getHashmapTitleCategory().toString());
+        System.out.println(TodoNoteData.getHashMapNotes().toString());
+
     }
 
     public void onOpenCategories(ActionEvent event) throws IOException {
