@@ -2,7 +2,7 @@ package com.nizar.todogamedevapp;
 
 import com.nizar.todogamedevapp.categories.CategoriesSingleton;
 import com.nizar.todogamedevapp.notes.NoteTextController;
-import com.nizar.todogamedevapp.todonote.TodoAdded;
+import com.nizar.todogamedevapp.todonote.TodoNoteData;
 import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -97,11 +97,11 @@ public class MainController implements Initializable {
                 String selectedCategory = categoriesChoiceSort.getSelectionModel().getSelectedItem();
                 HashMap<String, String> sortedHash = new HashMap<>();
                 if (selectedCategory.equalsIgnoreCase("all") || selectedCategory.equalsIgnoreCase("")) {
-                    sortedHash = TodoAdded.getHashMapNotes();
+                    sortedHash = TodoNoteData.getHashMapNotes();
                 } else {
-                    for (String noteTitle : TodoAdded.getHashmapTitleCategory().keySet()) {
-                        if (TodoAdded.getHashmapTitleCategory().get(noteTitle).equals(selectedCategory)) {
-                            sortedHash.put(noteTitle, TodoAdded.getHashMapNotes().get(noteTitle));
+                    for (String noteTitle : TodoNoteData.getHashmapTitleCategory().keySet()) {
+                        if (TodoNoteData.getHashmapTitleCategory().get(noteTitle).equals(selectedCategory)) {
+                            sortedHash.put(noteTitle, TodoNoteData.getHashMapNotes().get(noteTitle));
                         }
                     }
                 }

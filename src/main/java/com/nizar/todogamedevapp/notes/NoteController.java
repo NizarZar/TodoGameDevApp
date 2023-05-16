@@ -3,7 +3,7 @@ package com.nizar.todogamedevapp.notes;
 import com.nizar.todogamedevapp.MainController;
 import com.nizar.todogamedevapp.MainSingleton;
 import com.nizar.todogamedevapp.categories.CategoriesSingleton;
-import com.nizar.todogamedevapp.todonote.TodoAdded;
+import com.nizar.todogamedevapp.todonote.TodoNoteData;
 import com.nizar.todogamedevapp.todonote.TodoNote;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -55,7 +55,7 @@ public class NoteController implements Initializable {
             MainController mainController = loader.getController();
             mainController.addNoteItem(noteTitle + " (" + categorySelected + ")");
             // store the note data
-            TodoAdded.addText(todoNote);
+            TodoNoteData.addText(todoNote);
 
             System.out.println("Note added");
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

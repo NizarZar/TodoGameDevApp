@@ -2,7 +2,7 @@ package com.nizar.todogamedevapp.todonote;
 
 import java.util.HashMap;
 
-public class TodoAdded {
+public class TodoNoteData {
 
 
         // TODO: Change HashMap to another Data Structure to store repeated title
