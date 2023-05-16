@@ -1,5 +1,10 @@
-package com.nizar.todogamedevapp;
+package com.nizar.todogamedevapp.notes;
 
+import com.nizar.todogamedevapp.MainController;
+import com.nizar.todogamedevapp.MainSingleton;
+import com.nizar.todogamedevapp.categories.CategoriesSingleton;
+import com.nizar.todogamedevapp.todonote.TodoNoteData;
+import com.nizar.todogamedevapp.todonote.TodoNote;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,7 +30,7 @@ public class NoteController implements Initializable {
     ListView<String> categories;
 
     public void onBack(ActionEvent event) throws IOException {
-        Parent root = MainSingleton.getInstance().root;
+        Parent root = MainSingleton.getInstance().getRoot();
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Game Dev Todo and Note App");
         Scene scene = root.getScene();
@@ -33,26 +38,24 @@ public class NoteController implements Initializable {
         stage.show();
     }
 
-
     public void addNote(ActionEvent event) throws IOException {
         // stage, scene and root
         // category selected
         String categorySelected = categories.getSelectionModel().getSelectedItem();
         String noteTitle = titleArea.getText();
         String noteText = noteArea.getText();
-        String category = categorySelected;
         // check if noteTitle or notetext are not empty
-        if (!noteTitle.equals("") && !noteText.equals("")){ //&& category != null) {
+        if (!noteTitle.equals("") && !noteText.equals("")){ //&& categorySelected != null) {
             // get selected category
             // create the note with the title, text body and category parameters
             TodoNote todoNote = new TodoNote(noteTitle, noteText, categorySelected);
             // add it to the main scene singleton that shows all notes
-            FXMLLoader loader = MainSingleton.getInstance().mainFXML;
-            Parent root = MainSingleton.getInstance().root;
+            FXMLLoader loader = MainSingleton.getInstance().getMainFXML();
+            Parent root = MainSingleton.getInstance().getRoot();
             MainController mainController = loader.getController();
             mainController.addNoteItem(noteTitle + " (" + categorySelected + ")");
             // store the note data
-            TodoAdded.addText(todoNote);
+            TodoNoteData.addText(todoNote);
 
             System.out.println("Note added");
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

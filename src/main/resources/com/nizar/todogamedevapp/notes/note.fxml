@@ -8,9 +8,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nizar.todogamedevapp.NoteController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nizar.todogamedevapp.notes.NoteController">
    <children>
-      <TextArea fx:id="noteArea" layoutX="118.0" layoutY="134.0" prefHeight="199.0" prefWidth="277.0" promptText="Write your todo or note here" />
+      <TextArea fx:id="noteArea" layoutX="123.0" layoutY="135.0" prefHeight="199.0" prefWidth="277.0" promptText="Write your todo or note here" />
       <Text layoutX="182.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add your note on the text area" wrappingWidth="235.08984375">
          <font>
             <Font size="17.0" />
@@ -25,8 +25,8 @@
             <Font size="20.0" />
          </font>
       </Text>
-      <TextField fx:id="titleArea" layoutX="118.0" layoutY="96.0" prefHeight="25.0" prefWidth="277.0" promptText="Title" />
-      <ListView fx:id="categories" layoutX="14.0" layoutY="109.0" prefHeight="200.0" prefWidth="65.0" />
-      <Button layoutX="513.0" layoutY="361.0" mnemonicParsing="false" onAction="#onBack" text="Back" />
+      <TextField fx:id="titleArea" layoutX="123.0" layoutY="97.0" prefHeight="25.0" prefWidth="277.0" promptText="Title" />
+      <ListView fx:id="categories" layoutX="14.0" layoutY="122.0" prefHeight="200.0" prefWidth="83.0" />
+      <Button layoutX="545.0" layoutY="364.0" mnemonicParsing="false" onAction="#onBack" text="Back" />
    </children>
 </AnchorPane>

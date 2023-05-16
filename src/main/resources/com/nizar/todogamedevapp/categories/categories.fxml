@@ -5,7 +5,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nizar.todogamedevapp.CategoriesController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nizar.todogamedevapp.categories.CategoriesController">
    <children>
       <ListView fx:id="categoriesListView" layoutX="14.0" layoutY="22.0" prefHeight="200.0" prefWidth="200.0" />
       <Button layoutX="433.0" layoutY="35.0" mnemonicParsing="false" onAction="#onAddCategory" text="Add Category" />

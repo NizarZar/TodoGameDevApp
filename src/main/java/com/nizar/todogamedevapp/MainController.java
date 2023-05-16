@@ -1,5 +1,8 @@
 package com.nizar.todogamedevapp;
 
+import com.nizar.todogamedevapp.categories.CategoriesSingleton;
+import com.nizar.todogamedevapp.notes.NoteTextController;
+import com.nizar.todogamedevapp.todonote.TodoNoteData;
 import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,7 +32,7 @@ public class MainController implements Initializable {
 
     // method for Add Note button that opens a scene to create your own note /todo
     public void addNote(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("note.fxml")));
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("notes/note.fxml")));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setTitle("Note Add");
@@ -40,7 +43,6 @@ public class MainController implements Initializable {
     public void onLogout(ActionEvent event) throws IOException{
         System.out.println("Logged out!");
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login.fxml")));
-
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
@@ -49,14 +51,15 @@ public class MainController implements Initializable {
     // method called to add an item to the note listview of main scene
 
     public void addNoteItem(String text){
+        System.out.println("Note Item Added");
         listView.getItems().add(text);
     }
 
     public void onCheck(ActionEvent event) throws IOException {
         // load selected note or todo
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("noteslist.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("notes/notetext.fxml"));
         root = loader.load();
-        NotesListController notesListController = loader.getController();
+        NoteTextController notesListController = loader.getController();
         notesListController.addText(listView.getSelectionModel().getSelectedItem());
 
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -65,22 +68,20 @@ public class MainController implements Initializable {
     }
 
     public void deleteNoteItem(){
-        System.out.println("Note deleted");
+        System.out.println("Note Item deleted");
         listView.getItems().remove(listView.getSelectionModel().getSelectedItem());
     }
 
     public void onOpenCategories(ActionEvent event) throws IOException {
-        //FXMLLoader categoriesLoader = CategoriesSingleton.getInstance().categoriesFXML;
-        //root = CategoriesSingleton.getInstance().root;
-        //CategoriesController categoriesController = categoriesLoader.getController();
-        //stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        //stage.setScene(root.getScene());
-        //stage.show();
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("categories.fxml"));
-        root = loader.load();
+        root = CategoriesSingleton.getInstance().getRoot();
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
+        if(root.getScene() == null){
+            scene = new Scene(root);
+        } else {
+            scene = root.getScene();
+        }
+        stage.setTitle("Categories");
+        stage.setScene(scene);
         stage.show();
     }
 
@@ -96,11 +97,11 @@ public class MainController implements Initializable {
                 String selectedCategory = categoriesChoiceSort.getSelectionModel().getSelectedItem();
                 HashMap<String, String> sortedHash = new HashMap<>();
                 if (selectedCategory.equalsIgnoreCase("all") || selectedCategory.equalsIgnoreCase("")) {
-                    sortedHash = TodoAdded.getHashMapNotes();
+                    sortedHash = TodoNoteData.getHashMapNotes();
                 } else {
-                    for (String noteTitle : TodoAdded.getHashmapTitleCategory().keySet()) {
-                        if (TodoAdded.getHashmapTitleCategory().get(noteTitle).equals(selectedCategory)) {
-                            sortedHash.put(noteTitle, TodoAdded.getHashMapNotes().get(noteTitle));
+                    for (String noteTitle : TodoNoteData.getHashmapTitleCategory().keySet()) {
+                        if (TodoNoteData.getHashmapTitleCategory().get(noteTitle).equals(selectedCategory)) {
+                            sortedHash.put(noteTitle, TodoNoteData.getHashMapNotes().get(noteTitle));
                         }
                     }
                 }
@@ -114,7 +115,6 @@ public class MainController implements Initializable {
                 }
             }
         });
-        System.out.println(CategoriesSingleton.getCategories());
     }
 
     // frame updater
@@ -126,7 +126,7 @@ public class MainController implements Initializable {
                     categoriesChoiceSort.getItems().add(category);
                 }
             }
-            categoriesChoiceSort.getItems().removeIf(dCategory -> !CategoriesSingleton.getCategories().contains(dCategory));
+            categoriesChoiceSort.getItems().removeIf(category -> !CategoriesSingleton.getCategories().contains(category));
         }
     };
 }

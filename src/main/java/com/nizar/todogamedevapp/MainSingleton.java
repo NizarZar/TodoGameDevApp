@@ -8,8 +8,8 @@ import java.io.IOException;
 public class MainSingleton {
 
    private static MainSingleton main = null;
-   public FXMLLoader mainFXML;
-   public Parent root;
+   private FXMLLoader mainFXML;
+   private Parent root;
 
     private MainSingleton() throws IOException {
         mainFXML = new FXMLLoader(getClass().getResource("main-view.fxml"));
@@ -22,5 +22,11 @@ public class MainSingleton {
         return main;
     }
 
+    public Parent getRoot() {
+        return root;
+    }
 
+    public FXMLLoader getMainFXML() {
+        return mainFXML;
+    }
 }

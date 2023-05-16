@@ -1,5 +1,6 @@
 ADD:
-Title for each new
-Notes are clickable in the list view
-assign which type of note (bug or feature etc..)
+Fix ChoiceBox not updating deleted categories
+Fix ChoiceBox not displaying the All categories
+Add Firebase for authentication and save the notes data
+
 
