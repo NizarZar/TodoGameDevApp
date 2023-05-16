@@ -16,7 +16,10 @@ import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.*;
 import java.util.*;
+
+// SQL IS SAVED at: C://sqlite/db for now
 
 public class MainController implements Initializable {
 
@@ -29,6 +32,16 @@ public class MainController implements Initializable {
 
     @FXML
     ChoiceBox<String> categoriesChoiceSort;
+    private Connection connectCategoriesDB(){
+        String url = "jdbc:sqlite:C://sqlite/db/categories.db";
+        Connection connection = null;
+        try {
+            connection = DriverManager.getConnection(url);
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return connection;
+    }
 
     // method for Add Note button that opens a scene to create your own note /todo
     public void addNote(ActionEvent event) throws IOException {
@@ -68,13 +81,14 @@ public class MainController implements Initializable {
     }
 
     public void deleteNoteItem(){
-        System.out.println("Note Item deleted");
         String selectedItem = listView.getSelectionModel().getSelectedItem();
         listView.getItems().remove(selectedItem);
         if(TodoNoteData.getHashMapNotes().containsKey(selectedItem)){
             TodoNoteData.getHashMapNotes().remove(selectedItem);
             TodoNoteData.getHashmapTitleCategory().remove(selectedItem);
         }
+        //debug
+        System.out.println("Note Item deleted");
         System.out.println("AFTER DELETING:");
         System.out.println(TodoNoteData.getHashmapTitleCategory());
         System.out.println(TodoNoteData.getHashMapNotes());
@@ -91,21 +105,35 @@ public class MainController implements Initializable {
         stage.setTitle("Categories");
         stage.setScene(scene);
         stage.show();
+        System.out.println(CategoriesSingleton.getCategories().toString());
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        String sqlCategories = "SELECT * FROM categories";
+        try {
+            Connection connection = this.connectCategoriesDB();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sqlCategories);
+            while(resultSet.next()){
+                CategoriesSingleton.getCategories().add(resultSet.getString("category"));
+            }
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
         categoriesChoiceSort.getItems().add("all");
         categoriesChoiceSort.getItems().addAll(CategoriesSingleton.getCategories());
-        categoriesChoiceSort.setVisible(true);
         animationTimer.start();
         // event when selecting from choicebox to sort
         categoriesChoiceSort.setOnAction(event -> {
             try {
                 String selectedCategory = categoriesChoiceSort.getSelectionModel().getSelectedItem();
+                System.out.println(selectedCategory.toString());
+                //debug
                 System.out.println("AFTER CLICKING CHOICEBOX:");
                 System.out.println(TodoNoteData.getHashMapNotes().toString());
                 System.out.println(TodoNoteData.getHashmapTitleCategory().toString());
+                // sorted hashmap from choicebox
                 HashMap<String, String> sortedHash = new HashMap<>();
                 if (selectedCategory.equalsIgnoreCase("all") || selectedCategory.equalsIgnoreCase("")) {
                     sortedHash = TodoNoteData.getHashMapNotes();

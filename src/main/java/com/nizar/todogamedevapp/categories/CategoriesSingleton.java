@@ -2,7 +2,6 @@ package com.nizar.todogamedevapp.categories;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -36,4 +35,6 @@ public class CategoriesSingleton {
     public FXMLLoader getCategoriesFXML() {
         return categoriesFXML;
     }
+
+
 }

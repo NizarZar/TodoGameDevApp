@@ -29,6 +29,7 @@ public class NoteController implements Initializable {
     @FXML
     ListView<String> categories;
 
+
     public void onBack(ActionEvent event) throws IOException {
         Parent root = MainSingleton.getInstance().getRoot();
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
