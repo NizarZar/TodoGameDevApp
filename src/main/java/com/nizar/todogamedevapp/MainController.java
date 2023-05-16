@@ -1,7 +1,9 @@
 package com.nizar.todogamedevapp;
 
 import com.nizar.todogamedevapp.categories.CategoriesSingleton;
+import com.nizar.todogamedevapp.notes.NoteEditController;
 import com.nizar.todogamedevapp.notes.NoteTextController;
+import com.nizar.todogamedevapp.todonote.TodoNote;
 import com.nizar.todogamedevapp.todonote.TodoNoteData;
 import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
@@ -95,11 +97,8 @@ public class MainController implements Initializable {
         stage.show();
     }
 
-    //TODO: NOT UPDATING IN THE SQL
     public void deleteNoteItem(){
         String selectedItem = listView.getSelectionModel().getSelectedItem();
-        System.out.println(TodoNoteData.getHashMapNotes().get(selectedItem));
-        System.out.println(TodoNoteData.getHashmapTitleCategory().get(selectedItem));
         String sql = "DELETE FROM notes" +
                 " WHERE noteTitle = ?" +
                     " AND noteText = ?" +
@@ -121,9 +120,6 @@ public class MainController implements Initializable {
             TodoNoteData.getHashMapNotes().remove(selectedItem);
             TodoNoteData.getHashmapTitleCategory().remove(selectedItem);
         }
-        System.out.println("AFTER DELETING:");
-        System.out.println(TodoNoteData.getHashmapTitleCategory().toString());
-        System.out.println(TodoNoteData.getHashMapNotes().toString());
 
     }
 
@@ -141,6 +137,17 @@ public class MainController implements Initializable {
         System.out.println(CategoriesSingleton.getCategories().toString());
     }
 
+    public void onOpenEditNote(ActionEvent event) throws IOException{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("notes/noteedit.fxml"));
+        root = loader.load();
+        NoteEditController noteEditController = loader.getController();
+        noteEditController.setOriginalText(TodoNoteData.getHashMapNotes().get(listView.getSelectionModel().getSelectedItem()));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         String sqlCategories = "SELECT * FROM categories";
@@ -162,8 +169,8 @@ public class MainController implements Initializable {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sqlNotes);
             while(resultSet.next()){
-                TodoNoteData.getHashMapNotes().put(resultSet.getString("noteTitle"),resultSet.getString("noteText"));
-                TodoNoteData.getHashmapTitleCategory().put(resultSet.getString("noteTitle"),resultSet.getString("category"));
+                TodoNote todoNote = new TodoNote(resultSet.getString("noteTitle"),resultSet.getString("noteText"),resultSet.getString("category"));
+                TodoNoteData.addText(todoNote);
             }
         } catch (SQLException e){
             System.out.println(e.getMessage());
@@ -210,12 +217,11 @@ public class MainController implements Initializable {
     AnimationTimer animationTimer = new AnimationTimer() {
         @Override
         public void handle(long l) {
-            for(String category : CategoriesSingleton.getCategories()){
-                if(!categoriesChoiceSort.getItems().contains(category)){
+            for (String category : CategoriesSingleton.getCategories()) {
+                if (!categoriesChoiceSort.getItems().contains(category)) {
                     categoriesChoiceSort.getItems().add(category);
                 }
             }
-            categoriesChoiceSort.getItems().removeIf(category -> !CategoriesSingleton.getCategories().contains(category));
-        }
-    };
+                categoriesChoiceSort.getItems().removeIf(category -> !CategoriesSingleton.getCategories().contains(category));
+        }};
 }
