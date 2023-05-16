@@ -12,9 +12,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader main = MainSingleton.getInstance().mainFXML;
-        FXMLLoader categories = CategoriesSingleton.getInstance().getCategoriesFXML();
-        Parent root = MainSingleton.getInstance().root;
+        Parent root = MainSingleton.getInstance().getRoot();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(false);

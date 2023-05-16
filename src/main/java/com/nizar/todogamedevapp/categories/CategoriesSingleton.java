@@ -1,4 +1,4 @@
-package com.nizar.todogamedevapp;
+package com.nizar.todogamedevapp.categories;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

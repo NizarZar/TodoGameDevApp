@@ -1,5 +1,7 @@
-package com.nizar.todogamedevapp;
+package com.nizar.todogamedevapp.notes;
 
+import com.nizar.todogamedevapp.MainSingleton;
+import com.nizar.todogamedevapp.todonote.TodoAdded;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -11,7 +13,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class NotesListController {
+public class NoteTextController {
 
     @FXML
     Text todoTextNote;
@@ -26,7 +28,7 @@ public class NotesListController {
     }
 
     public void onBack(ActionEvent event) throws IOException {
-        Parent root = MainSingleton.getInstance().root;
+        Parent root = MainSingleton.getInstance().getRoot();
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         System.out.println(TodoAdded.getHashMapNotes().values());
         stage.setTitle("Game Dev Todo and Note App");

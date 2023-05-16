@@ -1,5 +1,8 @@
 package com.nizar.todogamedevapp;
 
+import com.nizar.todogamedevapp.categories.CategoriesSingleton;
+import com.nizar.todogamedevapp.notes.NoteTextController;
+import com.nizar.todogamedevapp.todonote.TodoAdded;
 import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,7 +32,7 @@ public class MainController implements Initializable {
 
     // method for Add Note button that opens a scene to create your own note /todo
     public void addNote(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("note.fxml")));
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("notes/note.fxml")));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setTitle("Note Add");
@@ -54,9 +57,9 @@ public class MainController implements Initializable {
 
     public void onCheck(ActionEvent event) throws IOException {
         // load selected note or todo
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("noteslist.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("notes/notetext.fxml"));
         root = loader.load();
-        NotesListController notesListController = loader.getController();
+        NoteTextController notesListController = loader.getController();
         notesListController.addText(listView.getSelectionModel().getSelectedItem());
 
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -88,11 +91,6 @@ public class MainController implements Initializable {
         categoriesChoiceSort.getItems().addAll(CategoriesSingleton.getCategories());
         categoriesChoiceSort.setVisible(true);
         animationTimer.start();
-        try {
-            FXMLLoader categoriesLoader = CategoriesSingleton.getInstance().getCategoriesFXML();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         // event when selecting from choicebox to sort
         categoriesChoiceSort.setOnAction(event -> {
             try {

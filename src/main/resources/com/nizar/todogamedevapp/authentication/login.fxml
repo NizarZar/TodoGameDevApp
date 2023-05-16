@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="scenePane" prefHeight="358.0" prefWidth="374.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nizar.todogamedevapp.LoginController">
+<AnchorPane fx:id="scenePane" prefHeight="358.0" prefWidth="374.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nizar.todogamedevapp.authentication.LoginController">
    <children>
       <Button layoutX="261.0" layoutY="215.0" mnemonicParsing="false" onAction="#onLogin" text="Login" />
       <Button layoutX="173.0" layoutY="215.0" mnemonicParsing="false" text="Register" />

@@ -1,5 +1,10 @@
-package com.nizar.todogamedevapp;
+package com.nizar.todogamedevapp.notes;
 
+import com.nizar.todogamedevapp.MainController;
+import com.nizar.todogamedevapp.MainSingleton;
+import com.nizar.todogamedevapp.categories.CategoriesSingleton;
+import com.nizar.todogamedevapp.todonote.TodoAdded;
+import com.nizar.todogamedevapp.todonote.TodoNote;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,7 +30,7 @@ public class NoteController implements Initializable {
     ListView<String> categories;
 
     public void onBack(ActionEvent event) throws IOException {
-        Parent root = MainSingleton.getInstance().root;
+        Parent root = MainSingleton.getInstance().getRoot();
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Game Dev Todo and Note App");
         Scene scene = root.getScene();
@@ -45,8 +50,8 @@ public class NoteController implements Initializable {
             // create the note with the title, text body and category parameters
             TodoNote todoNote = new TodoNote(noteTitle, noteText, categorySelected);
             // add it to the main scene singleton that shows all notes
-            FXMLLoader loader = MainSingleton.getInstance().mainFXML;
-            Parent root = MainSingleton.getInstance().root;
+            FXMLLoader loader = MainSingleton.getInstance().getMainFXML();
+            Parent root = MainSingleton.getInstance().getRoot();
             MainController mainController = loader.getController();
             mainController.addNoteItem(noteTitle + " (" + categorySelected + ")");
             // store the note data

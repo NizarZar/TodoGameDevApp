@@ -1,4 +1,4 @@
-package com.nizar.todogamedevapp;
+package com.nizar.todogamedevapp.authentication;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

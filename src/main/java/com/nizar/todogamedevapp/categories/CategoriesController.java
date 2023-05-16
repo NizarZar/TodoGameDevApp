@@ -1,5 +1,6 @@
-package com.nizar.todogamedevapp;
+package com.nizar.todogamedevapp.categories;
 
+import com.nizar.todogamedevapp.MainSingleton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -27,7 +28,7 @@ public class CategoriesController {
     }
 
     public void onBack(ActionEvent event) throws IOException {
-        Parent root = MainSingleton.getInstance().root;
+        Parent root = MainSingleton.getInstance().getRoot();
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         stage.setTitle("Game Dev Todo and Note App");
         Scene scene = root.getScene();

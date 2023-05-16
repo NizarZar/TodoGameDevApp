@@ -1,4 +1,4 @@
-package com.nizar.todogamedevapp;
+package com.nizar.todogamedevapp.todonote;
 
 public class TodoNote {
 
