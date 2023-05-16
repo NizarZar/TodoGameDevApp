@@ -69,7 +69,15 @@ public class MainController implements Initializable {
 
     public void deleteNoteItem(){
         System.out.println("Note Item deleted");
-        listView.getItems().remove(listView.getSelectionModel().getSelectedItem());
+        String selectedItem = listView.getSelectionModel().getSelectedItem();
+        listView.getItems().remove(selectedItem);
+        if(TodoNoteData.getHashMapNotes().containsKey(selectedItem)){
+            TodoNoteData.getHashMapNotes().remove(selectedItem);
+            TodoNoteData.getHashmapTitleCategory().remove(selectedItem);
+        }
+        System.out.println("AFTER DELETING:");
+        System.out.println(TodoNoteData.getHashmapTitleCategory());
+        System.out.println(TodoNoteData.getHashMapNotes());
     }
 
     public void onOpenCategories(ActionEvent event) throws IOException {
@@ -95,6 +103,9 @@ public class MainController implements Initializable {
         categoriesChoiceSort.setOnAction(event -> {
             try {
                 String selectedCategory = categoriesChoiceSort.getSelectionModel().getSelectedItem();
+                System.out.println("AFTER CLICKING CHOICEBOX:");
+                System.out.println(TodoNoteData.getHashMapNotes().toString());
+                System.out.println(TodoNoteData.getHashmapTitleCategory().toString());
                 HashMap<String, String> sortedHash = new HashMap<>();
                 if (selectedCategory.equalsIgnoreCase("all") || selectedCategory.equalsIgnoreCase("")) {
                     sortedHash = TodoNoteData.getHashMapNotes();

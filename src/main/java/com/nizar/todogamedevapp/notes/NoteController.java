@@ -53,7 +53,7 @@ public class NoteController implements Initializable {
             FXMLLoader loader = MainSingleton.getInstance().getMainFXML();
             Parent root = MainSingleton.getInstance().getRoot();
             MainController mainController = loader.getController();
-            mainController.addNoteItem(noteTitle + " (" + categorySelected + ")");
+            mainController.addNoteItem(noteTitle);
             // store the note data
             TodoNoteData.addText(todoNote);
 
