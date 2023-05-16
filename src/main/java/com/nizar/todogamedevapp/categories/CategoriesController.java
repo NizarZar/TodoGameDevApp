@@ -65,6 +65,8 @@ public class CategoriesController implements Initializable {
     public void onDeleteCategory(){
         String selectedCategoryItem = categoriesListView.getSelectionModel().getSelectedItem();
         String sql = "DELETE FROM categories WHERE category = ?";
+        categoriesListView.getItems().remove(selectedCategoryItem);
+        CategoriesSingleton.getCategories().remove(selectedCategoryItem);
         try{
             Connection connection = this.connect();
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -73,8 +75,6 @@ public class CategoriesController implements Initializable {
         } catch (SQLException e){
             System.out.println(e.getMessage());
         }
-        categoriesListView.getItems().remove(selectedCategoryItem);
-        CategoriesSingleton.getCategories().remove(selectedCategoryItem);
     }
 
 
@@ -86,7 +86,7 @@ public class CategoriesController implements Initializable {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
             while(resultSet.next()){
-                categoriesListView.getItems().add(resultSet.getString("category") + "\t");
+                categoriesListView.getItems().add(resultSet.getString("category"));
             }
         } catch (SQLException e){
             System.out.println(e.getMessage());
