@@ -21,7 +21,6 @@ public class NoteTextController {
     @FXML
     Button backButton;
 
-    // TODO: FIX TEXT NOT APPEARING
     public void addText(String title){
         todoTextNote.setText(TodoNoteData.getHashMapNotes().get(title));
         todoTextNote.setVisible(true);

@@ -16,6 +16,10 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class NoteController implements Initializable {
@@ -29,6 +33,17 @@ public class NoteController implements Initializable {
     @FXML
     ListView<String> categories;
 
+
+    private Connection connectNotesDB(){
+        String url = "jdbc:sqlite:C://sqlite/db/notes.db";
+        Connection connection = null;
+        try {
+            connection = DriverManager.getConnection(url);
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return connection;
+    }
 
     public void onBack(ActionEvent event) throws IOException {
         Parent root = MainSingleton.getInstance().getRoot();
@@ -45,9 +60,20 @@ public class NoteController implements Initializable {
         String categorySelected = categories.getSelectionModel().getSelectedItem();
         String noteTitle = titleArea.getText();
         String noteText = noteArea.getText();
+        String sql = "INSERT INTO notes (noteTitle, noteText, category) VALUES(?,?,?)";
         // check if noteTitle or notetext are not empty
         if (!noteTitle.equals("") && !noteText.equals("")){ //&& categorySelected != null) {
-            // get selected category
+            // adding to the database:
+            try {
+                Connection connection = this.connectNotesDB();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1,noteTitle);
+                preparedStatement.setString(2,noteText);
+                preparedStatement.setString(3,categorySelected);
+                preparedStatement.executeUpdate();
+            } catch (SQLException e){
+                System.out.println(e.getMessage());
+            }
             // create the note with the title, text body and category parameters
             TodoNote todoNote = new TodoNote(noteTitle, noteText, categorySelected);
             // add it to the main scene singleton that shows all notes

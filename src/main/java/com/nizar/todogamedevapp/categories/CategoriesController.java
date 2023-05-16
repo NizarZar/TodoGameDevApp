@@ -61,6 +61,7 @@ public class CategoriesController implements Initializable {
     }
 
     //TODO: When deleting it always delete first one on ChoiceBox
+    //TODO: NOT UPDATING IN THE SQL
     public void onDeleteCategory(){
         String selectedCategoryItem = categoriesListView.getSelectionModel().getSelectedItem();
         String sql = "DELETE FROM categories WHERE category = ?";
