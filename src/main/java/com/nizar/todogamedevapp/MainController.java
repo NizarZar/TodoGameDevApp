@@ -70,6 +70,7 @@ public class MainController implements Initializable {
         stage.show();
     }
 
+    /*
     public void onLogout(ActionEvent event) throws IOException{
         System.out.println("Logged out!");
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login.fxml")));
@@ -78,6 +79,8 @@ public class MainController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
+     */
     // method called to add an item to the note listview of main scene
 
     public void addNoteItem(String text){

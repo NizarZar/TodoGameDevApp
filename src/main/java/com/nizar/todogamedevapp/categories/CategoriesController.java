@@ -60,7 +60,6 @@ public class CategoriesController implements Initializable {
         stage.show();
     }
 
-    //TODO: When deleting it always delete first one on ChoiceBox
     public void onDeleteCategory(){
         String selectedCategoryItem = categoriesListView.getSelectionModel().getSelectedItem();
         String sql = "DELETE FROM categories WHERE category = ?";

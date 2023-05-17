@@ -1,6 +1,3 @@
-ADD:
-Fix ChoiceBox not updating deleted categories
-Fix ChoiceBox not displaying the All categories
-Add Firebase for authentication and save the notes data
+CSS styling
 
 
