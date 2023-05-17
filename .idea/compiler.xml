@@ -9,8 +9,5 @@
         <module name="TodoGameDevApp" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="TodoGameDevApp" target="11" />
-    </bytecodeTargetLevel>
   </component>
 </project>
