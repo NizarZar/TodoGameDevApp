@@ -6,8 +6,6 @@ import com.nizar.todogamedevapp.notes.NoteTextController;
 import com.nizar.todogamedevapp.todonote.TodoNote;
 import com.nizar.todogamedevapp.todonote.TodoNoteData;
 import javafx.animation.AnimationTimer;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,10 +14,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
-
-import javax.xml.transform.Result;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
@@ -38,6 +35,9 @@ public class MainController implements Initializable {
 
     @FXML
     ChoiceBox<String> choiceSortCategories;
+
+    @FXML
+    Label noteCategoryLabel;
 
     // handling sql connections
     private Connection connectCategoriesDB(){
@@ -86,7 +86,7 @@ public class MainController implements Initializable {
     // method called to add an item to the note listview of main scene
 
     public void addNoteItem(String text){
-        System.out.println("Note Item Added");
+        //System.out.println("Note Item Added");
         listView.getItems().add(text);
     }
 
@@ -151,7 +151,6 @@ public class MainController implements Initializable {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-
     }
 
     @Override
@@ -187,6 +186,10 @@ public class MainController implements Initializable {
         choiceSortCategories.getItems().add("All");
         choiceSortCategories.getItems().addAll(CategoriesSingleton.getCategories());
         animationTimer.start();
+        // clicking on list of notes
+        listView.setOnMouseClicked(event -> {
+            noteCategoryLabel.setText(TodoNoteData.getHashmapTitleCategory().get(listView.getSelectionModel().getSelectedItem()));
+        });
         // event when selecting from choiceboxList to sort
         choiceSortCategories.setOnAction(event -> {try {
             String selectedCategory = choiceSortCategories.getSelectionModel().getSelectedItem();
@@ -220,7 +223,6 @@ public class MainController implements Initializable {
 
     // frame updater
     AnimationTimer animationTimer = new AnimationTimer() {
-
         @Override
         public void handle(long l) {
             for (String category : CategoriesSingleton.getCategories()) {

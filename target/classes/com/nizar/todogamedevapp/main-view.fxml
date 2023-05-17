@@ -7,19 +7,20 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="410.0" prefWidth="530.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nizar.todogamedevapp.MainController">
+<AnchorPane prefHeight="400.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nizar.todogamedevapp.MainController">
    <children>
-      <Button layoutX="23.0" layoutY="363.0" mnemonicParsing="false" onAction="#addNote" prefHeight="34.0" prefWidth="76.0" text="Add Note">
+      <Button layoutX="132.0" layoutY="329.0" mnemonicParsing="false" onAction="#addNote" prefHeight="34.0" prefWidth="76.0" text="Add Note">
          <font>
             <Font size="13.0" />
          </font>
       </Button>
-      <ListView fx:id="listView" editable="true" layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" />
-      <Button layoutX="53.0" layoutY="222.0" mnemonicParsing="false" onAction="#onCheck" text="Show Selected Note" />
-      <Button layoutX="115.0" layoutY="363.0" mnemonicParsing="false" onAction="#deleteNoteItem" prefHeight="34.0" prefWidth="89.0" text="Delete Note" />
-      <Button layoutX="61.0" layoutY="264.0" mnemonicParsing="false" onAction="#onOpenCategories" prefHeight="34.0" prefWidth="76.0" text="Categories" />
-      <Label layoutX="265.0" layoutY="26.0" text="Sort by:" />
-      <Button layoutX="188.0" layoutY="222.0" mnemonicParsing="false" onAction="#onOpenEditNote" text="Edit" />
-      <ChoiceBox fx:id="choiceSortCategories" layoutX="323.0" layoutY="22.0" prefWidth="150.0" />
+      <ListView fx:id="listView" editable="true" layoutX="127.0" layoutY="71.0" prefHeight="200.0" prefWidth="200.0" />
+      <Button layoutX="128.0" layoutY="283.0" mnemonicParsing="false" onAction="#onCheck" text="Show Selected Note" />
+      <Button layoutX="246.0" layoutY="329.0" mnemonicParsing="false" onAction="#deleteNoteItem" prefHeight="34.0" prefWidth="89.0" text="Delete Note" />
+      <Button layoutX="349.0" layoutY="154.0" mnemonicParsing="false" onAction="#onOpenCategories" prefHeight="34.0" prefWidth="76.0" text="Categories" />
+      <Label layoutX="91.0" layoutY="37.0" text="Sort by:" />
+      <Button layoutX="290.0" layoutY="283.0" mnemonicParsing="false" onAction="#onOpenEditNote" text="Edit" />
+      <ChoiceBox fx:id="choiceSortCategories" layoutX="141.0" layoutY="33.0" prefHeight="25.0" prefWidth="182.0" />
+      <Label fx:id="noteCategoryLabel" layoutX="29.0" layoutY="154.0" prefHeight="17.0" prefWidth="89.0" textAlignment="CENTER" />
    </children>
 </AnchorPane>
