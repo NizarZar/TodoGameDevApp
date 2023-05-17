@@ -1,6 +1,7 @@
 module com.nizar.todogamedevapp {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.sql;
 
 
     opens com.nizar.todogamedevapp to javafx.fxml;

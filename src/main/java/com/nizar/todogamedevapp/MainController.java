@@ -1,7 +1,9 @@
 package com.nizar.todogamedevapp;
 
 import com.nizar.todogamedevapp.categories.CategoriesSingleton;
+import com.nizar.todogamedevapp.notes.NoteEditController;
 import com.nizar.todogamedevapp.notes.NoteTextController;
+import com.nizar.todogamedevapp.todonote.TodoNote;
 import com.nizar.todogamedevapp.todonote.TodoNoteData;
 import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
@@ -14,9 +16,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+
+import javax.xml.transform.Result;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.*;
 import java.util.*;
+
+// SQL IS SAVED at: C://sqlite/db for now
 
 public class MainController implements Initializable {
 
@@ -30,9 +37,32 @@ public class MainController implements Initializable {
     @FXML
     ChoiceBox<String> categoriesChoiceSort;
 
+    // handling sql connections
+    private Connection connectCategoriesDB(){
+        String url = "jdbc:sqlite:C://sqlite/db/categories.db";
+        Connection connection = null;
+        try {
+            connection = DriverManager.getConnection(url);
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return connection;
+    }
+    private Connection connectNotesDB(){
+        String url = "jdbc:sqlite:C://sqlite/db/notes.db";
+        Connection connection = null;
+        try {
+            connection = DriverManager.getConnection(url);
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return connection;
+    }
+
     // method for Add Note button that opens a scene to create your own note /todo
     public void addNote(ActionEvent event) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("notes/note.fxml")));
+        System.out.println(TodoNoteData.getHashMapNotes().toString());
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setTitle("Note Add");
@@ -40,6 +70,7 @@ public class MainController implements Initializable {
         stage.show();
     }
 
+    /*
     public void onLogout(ActionEvent event) throws IOException{
         System.out.println("Logged out!");
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login.fxml")));
@@ -48,6 +79,8 @@ public class MainController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
+     */
     // method called to add an item to the note listview of main scene
 
     public void addNoteItem(String text){
@@ -68,8 +101,29 @@ public class MainController implements Initializable {
     }
 
     public void deleteNoteItem(){
+        String selectedItem = listView.getSelectionModel().getSelectedItem();
+        String sql = "DELETE FROM notes" +
+                " WHERE noteTitle = ?" +
+                    " AND noteText = ?" +
+                    " AND category = ?";
+        //debug
         System.out.println("Note Item deleted");
-        listView.getItems().remove(listView.getSelectionModel().getSelectedItem());
+        listView.getItems().remove(selectedItem);
+        try {
+            Connection connection = this.connectNotesDB();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, selectedItem);
+            preparedStatement.setString(2,TodoNoteData.getHashMapNotes().get(selectedItem));
+            preparedStatement.setString(3,TodoNoteData.getHashmapTitleCategory().get(selectedItem));
+            preparedStatement.executeUpdate();
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        if(TodoNoteData.getHashMapNotes().containsKey(selectedItem) && TodoNoteData.getHashmapTitleCategory().containsKey(selectedItem)){
+            TodoNoteData.getHashMapNotes().remove(selectedItem);
+            TodoNoteData.getHashmapTitleCategory().remove(selectedItem);
+        }
+
     }
 
     public void onOpenCategories(ActionEvent event) throws IOException {
@@ -83,18 +137,63 @@ public class MainController implements Initializable {
         stage.setTitle("Categories");
         stage.setScene(scene);
         stage.show();
+        System.out.println(CategoriesSingleton.getCategories().toString());
     }
 
+    public void onOpenEditNote(ActionEvent event) throws IOException{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("notes/noteedit.fxml"));
+        root = loader.load();
+        NoteEditController noteEditController = loader.getController();
+        noteEditController.setOriginalText(listView.getSelectionModel().getSelectedItem(),TodoNoteData.getHashMapNotes().get(listView.getSelectionModel().getSelectedItem()));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        String sqlCategories = "SELECT * FROM categories";
+        String sqlNotes = "SELECT * FROM notes";
+        // check and add categories from database at launch
+        try {
+            Connection connection = this.connectCategoriesDB();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sqlCategories);
+            while(resultSet.next()){
+                CategoriesSingleton.getCategories().add(resultSet.getString("category"));
+            }
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        // check and add notes from database at launch
+        try {
+            Connection connection = this.connectNotesDB();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sqlNotes);
+            while(resultSet.next()){
+                TodoNote todoNote = new TodoNote(resultSet.getString("noteTitle"),resultSet.getString("noteText"),resultSet.getString("category"));
+                TodoNoteData.addText(todoNote);
+            }
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        // adding all the notes after database check
+        listView.getItems().addAll(TodoNoteData.getHashMapNotes().keySet());
+        // adding all categories to choicebox and the default category "all"
         categoriesChoiceSort.getItems().add("all");
         categoriesChoiceSort.getItems().addAll(CategoriesSingleton.getCategories());
-        categoriesChoiceSort.setVisible(true);
         animationTimer.start();
         // event when selecting from choicebox to sort
         categoriesChoiceSort.setOnAction(event -> {
             try {
                 String selectedCategory = categoriesChoiceSort.getSelectionModel().getSelectedItem();
+                System.out.println(selectedCategory);
+                //debug
+                System.out.println("AFTER CLICKING CHOICEBOX:");
+                System.out.println(TodoNoteData.getHashMapNotes().toString());
+                System.out.println(TodoNoteData.getHashmapTitleCategory().toString());
+                // sorted hashmap from choicebox
                 HashMap<String, String> sortedHash = new HashMap<>();
                 if (selectedCategory.equalsIgnoreCase("all") || selectedCategory.equalsIgnoreCase("")) {
                     sortedHash = TodoNoteData.getHashMapNotes();
@@ -121,12 +220,11 @@ public class MainController implements Initializable {
     AnimationTimer animationTimer = new AnimationTimer() {
         @Override
         public void handle(long l) {
-            for(String category : CategoriesSingleton.getCategories()){
-                if(!categoriesChoiceSort.getItems().contains(category)){
+            for (String category : CategoriesSingleton.getCategories()) {
+                if (!categoriesChoiceSort.getItems().contains(category)) {
                     categoriesChoiceSort.getItems().add(category);
                 }
             }
-            categoriesChoiceSort.getItems().removeIf(category -> !CategoriesSingleton.getCategories().contains(category));
-        }
-    };
+                categoriesChoiceSort.getItems().removeIf(category -> !CategoriesSingleton.getCategories().contains(category));
+        }};
 }
