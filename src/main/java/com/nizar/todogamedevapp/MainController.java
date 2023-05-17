@@ -137,7 +137,7 @@ public class MainController implements Initializable {
         stage.setTitle("Categories");
         stage.setScene(scene);
         stage.show();
-        System.out.println(CategoriesSingleton.getCategories().toString());
+        //System.out.println(CategoriesSingleton.getCategories().toString());
     }
 
     public void onOpenEditNote(ActionEvent event) throws IOException{
@@ -189,11 +189,11 @@ public class MainController implements Initializable {
         categoriesChoiceSort.setOnAction(event -> {
             try {
                 String selectedCategory = categoriesChoiceSort.getSelectionModel().getSelectedItem();
-                System.out.println(selectedCategory);
+               // System.out.println(selectedCategory);
                 //debug
-                System.out.println("AFTER CLICKING CHOICEBOX:");
-                System.out.println(TodoNoteData.getHashMapNotes().toString());
-                System.out.println(TodoNoteData.getHashmapTitleCategory().toString());
+                //System.out.println("AFTER CLICKING CHOICEBOX:");
+                //System.out.println(TodoNoteData.getHashMapNotes().toString());
+                //System.out.println(TodoNoteData.getHashmapTitleCategory().toString());
                 // sorted hashmap from choicebox
                 HashMap<String, String> sortedHash = new HashMap<>();
                 if (selectedCategory.equalsIgnoreCase("all") || selectedCategory.equalsIgnoreCase("")) {

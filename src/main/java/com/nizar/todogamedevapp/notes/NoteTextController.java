@@ -29,7 +29,7 @@ public class NoteTextController {
     public void onBack(ActionEvent event) throws IOException {
         Parent root = MainSingleton.getInstance().getRoot();
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        System.out.println(TodoNoteData.getHashMapNotes().values());
+        //System.out.println(TodoNoteData.getHashMapNotes().values());
         stage.setTitle("Game Dev Todo and Note App");
         Scene scene = root.getScene();
         stage.setScene(scene);

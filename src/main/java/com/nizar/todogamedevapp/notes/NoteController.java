@@ -84,7 +84,7 @@ public class NoteController implements Initializable {
             // store the note data
             TodoNoteData.addText(todoNote);
 
-            System.out.println("Note added");
+            //System.out.println("Note added");
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = root.getScene();
             stage.setTitle("Game Dev Todo and Note App");
