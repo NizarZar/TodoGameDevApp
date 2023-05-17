@@ -141,7 +141,7 @@ public class MainController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("notes/noteedit.fxml"));
         root = loader.load();
         NoteEditController noteEditController = loader.getController();
-        noteEditController.setOriginalText(TodoNoteData.getHashMapNotes().get(listView.getSelectionModel().getSelectedItem()));
+        noteEditController.setOriginalText(listView.getSelectionModel().getSelectedItem(),TodoNoteData.getHashMapNotes().get(listView.getSelectionModel().getSelectedItem()));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);

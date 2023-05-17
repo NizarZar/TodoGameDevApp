@@ -15,14 +15,15 @@ public class TodoNoteData {
             hashmapTitleCategory.put(todonote.getTitle(), todonote.getCategory());
             hashmapNotesVK.put(todonote.getText(),todonote.getTitle());
         }
+
     public static HashMap<String, String> getHashMapNotes() {
         return hashMapNotes;
     }
     public static HashMap<String, String> getHashmapTitleCategory(){
             return hashmapTitleCategory;
     }
-
     public static HashMap<String, String> getHashmapNotesVK() {
             return hashmapNotesVK;
         }
+
 }
