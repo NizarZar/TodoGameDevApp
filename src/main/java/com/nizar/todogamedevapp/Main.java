@@ -25,7 +25,7 @@ public class Main extends Application {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(false);
-        stage.setTitle("Game Dev Todo and Note App");
+        stage.setTitle("Todo and Note App");
         stage.show();
         //stage.setOnCloseRequest(event -> {
            // event.consume();

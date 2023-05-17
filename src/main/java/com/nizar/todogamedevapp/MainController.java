@@ -151,6 +151,7 @@ public class MainController implements Initializable {
         stage.show();
 
     }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         String sqlCategories = "SELECT * FROM categories";
@@ -178,7 +179,7 @@ public class MainController implements Initializable {
         } catch (SQLException e){
             System.out.println(e.getMessage());
         }
-        // adding all the notes after database check
+        // adding all notes
         listView.getItems().addAll(TodoNoteData.getHashMapNotes().keySet());
         // adding all categories to choicebox and the default category "all"
         categoriesChoiceSort.getItems().add("all");
@@ -218,6 +219,7 @@ public class MainController implements Initializable {
 
     // frame updater
     AnimationTimer animationTimer = new AnimationTimer() {
+
         @Override
         public void handle(long l) {
             for (String category : CategoriesSingleton.getCategories()) {

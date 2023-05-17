@@ -73,8 +73,11 @@ public class NoteEditController implements Initializable {
         } else {
             editedNote = new TodoNote(title,text,categories.getSelectionModel().getSelectedItem());
         }
+        TodoNoteData.getHashMapNotes().remove(originalTitle);
+        TodoNoteData.getHashmapTitleCategory().remove(originalTitle);
         TodoNoteData.addText(editedNote);
-
+        System.out.println(TodoNoteData.getHashMapNotes().toString());
+        System.out.println(TodoNoteData.getHashmapNotesVK());
         Parent root = MainSingleton.getInstance().getRoot();
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Scene scene = root.getScene();
