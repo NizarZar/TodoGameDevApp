@@ -33,7 +33,6 @@ public class NoteController implements Initializable {
     @FXML
     ListView<String> categories;
 
-
     private Connection connectNotesDB(){
         String url = "jdbc:sqlite:C://sqlite/db/notes.db";
         Connection connection = null;
@@ -48,7 +47,7 @@ public class NoteController implements Initializable {
     public void onBack(ActionEvent event) throws IOException {
         Parent root = MainSingleton.getInstance().getRoot();
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Game Dev Todo and Note App");
+        stage.setTitle("Todo and Note App");
         Scene scene = root.getScene();
         stage.setScene(scene);
         stage.show();
@@ -82,7 +81,7 @@ public class NoteController implements Initializable {
             MainController mainController = loader.getController();
             mainController.addNoteItem(noteTitle);
             // store the note data
-            TodoNoteData.addText(todoNote);
+            TodoNoteData.addData(todoNote);
 
             //System.out.println("Note added");
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

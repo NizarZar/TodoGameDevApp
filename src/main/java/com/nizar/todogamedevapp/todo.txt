@@ -1,3 +1,5 @@
 CSS styling
+Ability of dragging notes to prioritize
+Save the same order of notes given by user dragging and not by alphabetical order
 
 

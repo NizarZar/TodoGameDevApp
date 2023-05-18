@@ -10,7 +10,7 @@ public class TodoNoteData {
         private static HashMap<String, String> hashmapTitleCategory = new HashMap<>();
         private static HashMap<String, String> hashmapNotesVK = new HashMap<>();
 
-        public static void addText(TodoNote todonote){
+        public static void addData(TodoNote todonote){
             hashMapNotes.put(todonote.getTitle(), todonote.getText());
             hashmapTitleCategory.put(todonote.getTitle(), todonote.getCategory());
             hashmapNotesVK.put(todonote.getText(),todonote.getTitle());

@@ -61,7 +61,7 @@ public class MainController implements Initializable {
         return connection;
     }
 
-    // method for Add Note button that opens a scene to create your own note /todo
+    // method for Add Note button that opens a scene to create your own note
     public void addNote(ActionEvent event) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("notes/note.fxml")));
         System.out.println(TodoNoteData.getHashMapNotes().toString());
@@ -85,6 +85,7 @@ public class MainController implements Initializable {
      */
     // method called to add an item to the note listview of main scene
 
+    // add note to the listview (called by other classes)
     public void addNoteItem(String text){
         //System.out.println("Note Item Added");
         listView.getItems().add(text);
@@ -125,9 +126,7 @@ public class MainController implements Initializable {
             TodoNoteData.getHashMapNotes().remove(selectedItem);
             TodoNoteData.getHashmapTitleCategory().remove(selectedItem);
         }
-
     }
-
     public void onOpenCategories(ActionEvent event) throws IOException {
         root = CategoriesSingleton.getInstance().getRoot();
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -175,7 +174,7 @@ public class MainController implements Initializable {
             ResultSet resultSet = statement.executeQuery(sqlNotes);
             while(resultSet.next()){
                 TodoNote todoNote = new TodoNote(resultSet.getString("noteTitle"),resultSet.getString("noteText"),resultSet.getString("category"));
-                TodoNoteData.addText(todoNote);
+                TodoNoteData.addData(todoNote);
             }
         } catch (SQLException e){
             System.out.println(e.getMessage());
