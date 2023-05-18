@@ -174,7 +174,7 @@ public class MainController implements Initializable {
             ResultSet resultSet = statement.executeQuery(sqlNotes);
             while(resultSet.next()){
                 TodoNote todoNote = new TodoNote(resultSet.getString("noteTitle"),resultSet.getString("noteText"),resultSet.getString("category"));
-                TodoNoteData.addText(todoNote);
+                TodoNoteData.addData(todoNote);
             }
         } catch (SQLException e){
             System.out.println(e.getMessage());

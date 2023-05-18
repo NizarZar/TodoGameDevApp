@@ -75,7 +75,7 @@ public class NoteEditController implements Initializable {
         }
         TodoNoteData.getHashMapNotes().remove(originalTitle);
         TodoNoteData.getHashmapTitleCategory().remove(originalTitle);
-        TodoNoteData.addText(editedNote);
+        TodoNoteData.addData(editedNote);
         //System.out.println(TodoNoteData.getHashMapNotes().toString());
         //System.out.println(TodoNoteData.getHashmapNotesVK());
         Parent root = MainSingleton.getInstance().getRoot();
