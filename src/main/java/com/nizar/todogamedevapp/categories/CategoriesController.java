@@ -36,7 +36,7 @@ public class CategoriesController implements Initializable {
         return connection;
     }
 
-    public void onAddCategory(){
+    public void onAddCategory() throws SQLException {
         categoriesListView.getItems().add(categoryTextField.getText());
         CategoriesSingleton.getCategories().add(categoryTextField.getText());
         String sql = "INSERT INTO categories(category) VALUES(?)";
@@ -47,6 +47,14 @@ public class CategoriesController implements Initializable {
             preparedStatement.executeUpdate();
         } catch (SQLException e){
             System.out.println(e.getMessage());
+        } finally {
+            if(!connect().isClosed()){
+                try {
+                    connect().close();
+                } catch (SQLException e){
+                    System.out.println(e.getMessage());
+                }
+            }
         }
         categoryTextField.setText("");
     }
@@ -54,13 +62,13 @@ public class CategoriesController implements Initializable {
     public void onBack(ActionEvent event) throws IOException {
         Parent root = MainSingleton.getInstance().getRoot();
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.setTitle("Game Dev Todo and Note App");
+        stage.setTitle("Todo and Note App");
         Scene scene = root.getScene();
         stage.setScene(scene);
         stage.show();
     }
 
-    public void onDeleteCategory(){
+    public void onDeleteCategory() throws SQLException {
         String selectedCategoryItem = categoriesListView.getSelectionModel().getSelectedItem();
         String sql = "DELETE FROM categories WHERE category = ?";
         categoriesListView.getItems().remove(selectedCategoryItem);
@@ -72,10 +80,16 @@ public class CategoriesController implements Initializable {
             preparedStatement.executeUpdate();
         } catch (SQLException e){
             System.out.println(e.getMessage());
+        } finally {
+            if(!connect().isClosed()){
+                try {
+                    connect().close();
+                } catch (SQLException e){
+                    System.out.println(e.getMessage());
+                }
+            }
         }
     }
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         String sql = "SELECT * FROM categories";
@@ -88,6 +102,18 @@ public class CategoriesController implements Initializable {
             }
         } catch (SQLException e){
             System.out.println(e.getMessage());
+        } finally {
+            try {
+                if(!connect().isClosed()){
+                    try {
+                        connect().close();
+                    } catch (SQLException e){
+                        System.out.println(e.getMessage());
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

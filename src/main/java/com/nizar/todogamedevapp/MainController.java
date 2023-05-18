@@ -61,7 +61,7 @@ public class MainController implements Initializable {
         return connection;
     }
 
-    // method for Add Note button that opens a scene to create your own note /todo
+    // method for Add Note button that opens a scene to create your own note
     public void addNote(ActionEvent event) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("notes/note.fxml")));
         System.out.println(TodoNoteData.getHashMapNotes().toString());
@@ -85,6 +85,7 @@ public class MainController implements Initializable {
      */
     // method called to add an item to the note listview of main scene
 
+    // add note to the listview (called by other classes)
     public void addNoteItem(String text){
         //System.out.println("Note Item Added");
         listView.getItems().add(text);
@@ -102,7 +103,7 @@ public class MainController implements Initializable {
         stage.show();
     }
 
-    public void deleteNoteItem(){
+    public void deleteNoteItem() throws SQLException {
         String selectedItem = listView.getSelectionModel().getSelectedItem();
         String sql = "DELETE FROM notes" +
                 " WHERE noteTitle = ?" +
@@ -120,6 +121,14 @@ public class MainController implements Initializable {
             preparedStatement.executeUpdate();
         } catch (SQLException e){
             System.out.println(e.getMessage());
+        } finally {
+            if(!connectNotesDB().isClosed()){
+                try {
+                    connectNotesDB().close();
+                } catch (SQLException e){
+                    System.out.println(e.getMessage());
+                }
+            }
         }
         if(TodoNoteData.getHashMapNotes().containsKey(selectedItem) && TodoNoteData.getHashmapTitleCategory().containsKey(selectedItem)){
             TodoNoteData.getHashMapNotes().remove(selectedItem);
@@ -167,8 +176,20 @@ public class MainController implements Initializable {
             }
         } catch (SQLException e){
             System.out.println(e.getMessage());
+        } finally {
+            try {
+                if(!connectCategoriesDB().isClosed()){
+                    try {
+                        connectCategoriesDB().close();
+                    } catch (SQLException e){
+                        System.out.println(e.getMessage());
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
-        // check and add notes from database at launch
+        // check and add notes from database at launcha
         try {
             Connection connection = this.connectNotesDB();
             Statement statement = connection.createStatement();
@@ -179,6 +200,18 @@ public class MainController implements Initializable {
             }
         } catch (SQLException e){
             System.out.println(e.getMessage());
+        } finally {
+            try {
+                if(!connectNotesDB().isClosed()){
+                    try {
+                        connectNotesDB().close();
+                    } catch (SQLException e){
+                        System.out.println(e.getMessage());
+                    }
+            }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
         }
         // adding all notes
         listView.getItems().addAll(TodoNoteData.getHashMapNotes().keySet());

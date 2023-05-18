@@ -48,7 +48,7 @@ public class NoteEditController implements Initializable {
         return connection;
     }
 
-    public void onEdit(ActionEvent event) throws IOException {
+    public void onEdit(ActionEvent event) throws IOException, SQLException {
         String text = editTextArea.getText();
         String title = titleTextField.getText();
         String sql = "UPDATE notes SET noteText = ?, noteTitle = ?, category = ? WHERE noteTitle = ?";
@@ -66,6 +66,14 @@ public class NoteEditController implements Initializable {
             preparedStatement.executeUpdate();
         } catch (SQLException e){
             System.out.println(e.getMessage());
+        } finally {
+            if(!connect().isClosed()){
+                try {
+                    connect().close();
+                } catch (SQLException e){
+                    System.out.println(e.getMessage());
+                }
+            }
         }
         TodoNote editedNote;
         if(categories.getSelectionModel().isEmpty()){

@@ -30,7 +30,7 @@ public class NoteTextController {
         Parent root = MainSingleton.getInstance().getRoot();
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         //System.out.println(TodoNoteData.getHashMapNotes().values());
-        stage.setTitle("Game Dev Todo and Note App");
+        stage.setTitle("Todo and Note App");
         Scene scene = root.getScene();
         stage.setScene(scene);
         stage.show();

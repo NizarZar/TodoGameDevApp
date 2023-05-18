@@ -32,7 +32,7 @@ public class LoginController {
 
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
-        stage.setTitle("Game Dev Todo App");
+        stage.setTitle("Todo and Note App");
         stage.setScene(scene);
         stage.show();
     }
