@@ -103,7 +103,7 @@ public class MainController implements Initializable {
         stage.show();
     }
 
-    public void deleteNoteItem() throws SQLException {
+    public void deleteNoteItem(){
         String selectedItem = listView.getSelectionModel().getSelectedItem();
         String sql = "DELETE FROM notes" +
                 " WHERE noteTitle = ?" +
@@ -121,22 +121,12 @@ public class MainController implements Initializable {
             preparedStatement.executeUpdate();
         } catch (SQLException e){
             System.out.println(e.getMessage());
-        } finally {
-            if(!connectNotesDB().isClosed()){
-                try {
-                    connectNotesDB().close();
-                } catch (SQLException e){
-                    System.out.println(e.getMessage());
-                }
-            }
         }
         if(TodoNoteData.getHashMapNotes().containsKey(selectedItem) && TodoNoteData.getHashmapTitleCategory().containsKey(selectedItem)){
             TodoNoteData.getHashMapNotes().remove(selectedItem);
             TodoNoteData.getHashmapTitleCategory().remove(selectedItem);
         }
-
     }
-
     public void onOpenCategories(ActionEvent event) throws IOException {
         root = CategoriesSingleton.getInstance().getRoot();
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -176,20 +166,8 @@ public class MainController implements Initializable {
             }
         } catch (SQLException e){
             System.out.println(e.getMessage());
-        } finally {
-            try {
-                if(!connectCategoriesDB().isClosed()){
-                    try {
-                        connectCategoriesDB().close();
-                    } catch (SQLException e){
-                        System.out.println(e.getMessage());
-                    }
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
         }
-        // check and add notes from database at launcha
+        // check and add notes from database at launch
         try {
             Connection connection = this.connectNotesDB();
             Statement statement = connection.createStatement();
@@ -200,18 +178,6 @@ public class MainController implements Initializable {
             }
         } catch (SQLException e){
             System.out.println(e.getMessage());
-        } finally {
-            try {
-                if(!connectNotesDB().isClosed()){
-                    try {
-                        connectNotesDB().close();
-                    } catch (SQLException e){
-                        System.out.println(e.getMessage());
-                    }
-            }
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
         }
         // adding all notes
         listView.getItems().addAll(TodoNoteData.getHashMapNotes().keySet());

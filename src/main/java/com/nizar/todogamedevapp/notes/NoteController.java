@@ -53,7 +53,7 @@ public class NoteController implements Initializable {
         stage.show();
     }
 
-    public void addNote(ActionEvent event) throws IOException, SQLException {
+    public void addNote(ActionEvent event) throws IOException {
         // stage, scene and root
         // category selected
         String categorySelected = categories.getSelectionModel().getSelectedItem();
@@ -72,14 +72,6 @@ public class NoteController implements Initializable {
                 preparedStatement.executeUpdate();
             } catch (SQLException e){
                 System.out.println(e.getMessage());
-            } finally {
-                if(!connectNotesDB().isClosed()){
-                    try {
-                        connectNotesDB().close();
-                    } catch (SQLException e){
-                        System.out.println(e.getMessage());
-                    }
-                }
             }
             // create the note with the title, text body and category parameters
             TodoNote todoNote = new TodoNote(noteTitle, noteText, categorySelected);

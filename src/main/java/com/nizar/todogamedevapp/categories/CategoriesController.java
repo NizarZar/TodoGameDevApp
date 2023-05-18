@@ -36,7 +36,7 @@ public class CategoriesController implements Initializable {
         return connection;
     }
 
-    public void onAddCategory() throws SQLException {
+    public void onAddCategory(){
         categoriesListView.getItems().add(categoryTextField.getText());
         CategoriesSingleton.getCategories().add(categoryTextField.getText());
         String sql = "INSERT INTO categories(category) VALUES(?)";
@@ -47,14 +47,6 @@ public class CategoriesController implements Initializable {
             preparedStatement.executeUpdate();
         } catch (SQLException e){
             System.out.println(e.getMessage());
-        } finally {
-            if(!connect().isClosed()){
-                try {
-                    connect().close();
-                } catch (SQLException e){
-                    System.out.println(e.getMessage());
-                }
-            }
         }
         categoryTextField.setText("");
     }
@@ -68,7 +60,7 @@ public class CategoriesController implements Initializable {
         stage.show();
     }
 
-    public void onDeleteCategory() throws SQLException {
+    public void onDeleteCategory(){
         String selectedCategoryItem = categoriesListView.getSelectionModel().getSelectedItem();
         String sql = "DELETE FROM categories WHERE category = ?";
         categoriesListView.getItems().remove(selectedCategoryItem);
@@ -80,14 +72,6 @@ public class CategoriesController implements Initializable {
             preparedStatement.executeUpdate();
         } catch (SQLException e){
             System.out.println(e.getMessage());
-        } finally {
-            if(!connect().isClosed()){
-                try {
-                    connect().close();
-                } catch (SQLException e){
-                    System.out.println(e.getMessage());
-                }
-            }
         }
     }
     @Override
@@ -102,18 +86,6 @@ public class CategoriesController implements Initializable {
             }
         } catch (SQLException e){
             System.out.println(e.getMessage());
-        } finally {
-            try {
-                if(!connect().isClosed()){
-                    try {
-                        connect().close();
-                    } catch (SQLException e){
-                        System.out.println(e.getMessage());
-                    }
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 }
