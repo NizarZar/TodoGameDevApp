@@ -81,7 +81,7 @@ public class NoteController implements Initializable {
             MainController mainController = loader.getController();
             mainController.addNoteItem(noteTitle);
             // store the note data
-            TodoNoteData.addText(todoNote);
+            TodoNoteData.addData(todoNote);
 
             //System.out.println("Note added");
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
