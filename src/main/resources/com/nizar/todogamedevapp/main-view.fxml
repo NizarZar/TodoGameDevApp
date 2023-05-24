@@ -22,5 +22,6 @@
       <Button layoutX="290.0" layoutY="283.0" mnemonicParsing="false" onAction="#onOpenEditNote" text="Edit" />
       <ChoiceBox fx:id="choiceSortCategories" layoutX="141.0" layoutY="33.0" prefHeight="25.0" prefWidth="182.0" />
       <Label fx:id="noteCategoryLabel" layoutX="29.0" layoutY="154.0" prefHeight="17.0" prefWidth="89.0" textAlignment="CENTER" />
+      <Button layoutX="343.0" layoutY="216.0" mnemonicParsing="false" onAction="#OnOpenCompletedNotes" prefHeight="25.0" prefWidth="89.0" text="Completed" />
    </children>
 </AnchorPane>
