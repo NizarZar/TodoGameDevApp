@@ -1,7 +1,7 @@
 package com.nizar.todogamedevapp;
 
 import com.nizar.todogamedevapp.categories.CategoriesSingleton;
-import com.nizar.todogamedevapp.notes.CompletedNotesSingleton;
+import com.nizar.todogamedevapp.notes.CompletedNotesController;
 import com.nizar.todogamedevapp.notes.NoteEditController;
 import com.nizar.todogamedevapp.notes.NoteTextController;
 import com.nizar.todogamedevapp.todonote.TodoNote;
@@ -134,10 +134,8 @@ public class MainController implements Initializable {
         } catch (SQLException e){
             System.out.println(e.getMessage());
         }
-        if(TodoNoteData.getHashMapNotes().containsKey(title) && TodoNoteData.getHashmapTitleCategory().containsKey(title)){
-            TodoNoteData.getHashMapNotes().remove(title);
-            TodoNoteData.getHashmapTitleCategory().remove(title);
-        }
+        TodoNote removeNote = new TodoNote(title,TodoNoteData.getHashMapNotes().get(title),TodoNoteData.getHashmapTitleCategory().get(title));
+        TodoNoteData.removeData(removeNote);
     }
 
     public void deleteNoteItem(){
@@ -159,20 +157,13 @@ public class MainController implements Initializable {
         } catch (SQLException e){
             System.out.println(e.getMessage());
         }
-        if(TodoNoteData.getHashMapNotes().containsKey(selectedItem) && TodoNoteData.getHashmapTitleCategory().containsKey(selectedItem)){
-            TodoNoteData.getHashMapNotes().remove(selectedItem);
-            TodoNoteData.getHashmapTitleCategory().remove(selectedItem);
-        }
+        TodoNote removeNote = new TodoNote(selectedItem,TodoNoteData.getHashMapNotes().get(selectedItem),TodoNoteData.getHashmapTitleCategory().get(selectedItem));
+        TodoNoteData.removeData(removeNote);
     }
-    public void OnOpenCompletedNotes(ActionEvent event) throws IOException{
-        root = CompletedNotesSingleton.getInstance().getRoot();
+    public void OnOpenCompletedNotes(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("notes/completedNotes.fxml")));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        if(root.getScene() == null){
-            scene = new Scene(root);
-        } else {
-            scene = root.getScene();
-        }
-        stage.setTitle("Completed Notes");
+        scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
@@ -187,7 +178,6 @@ public class MainController implements Initializable {
         stage.setTitle("Categories");
         stage.setScene(scene);
         stage.show();
-        //System.out.println(CategoriesSingleton.getCategories().toString());
     }
 
     public void onOpenEditNote(ActionEvent event) throws IOException{
@@ -281,6 +271,7 @@ public class MainController implements Initializable {
         }
 
         });
+        System.out.println(TodoNoteData.getHashmapCompletedNotes());
     }
 
     // frame updater

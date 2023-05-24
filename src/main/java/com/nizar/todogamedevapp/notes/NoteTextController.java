@@ -13,20 +13,20 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class NoteTextController {
+public class NoteTextController{
 
     @FXML
     Text todoTextNote;
 
     @FXML
     Button backButton;
+
     @FXML
     CheckBox completedCheckBox;
 
@@ -54,7 +54,11 @@ public class NoteTextController {
     }
 
     public void addText(String title){
-        todoTextNote.setText(TodoNoteData.getHashMapNotes().get(title));
+        if(TodoNoteData.getHashMapNotes().containsKey(title)){
+            todoTextNote.setText(TodoNoteData.getHashMapNotes().get(title));
+        } else {
+            todoTextNote.setText(TodoNoteData.getHashmapCompletedNotes().get(title));
+        }
         this.title = title;
         todoTextNote.setVisible(true);
     }
@@ -69,6 +73,7 @@ public class NoteTextController {
         stage.show();
 
     }
+
 
     public void onCompletedCheck() throws IOException {
         if(completedCheckBox.isSelected()){
@@ -121,10 +126,10 @@ public class NoteTextController {
                 mainController.addNoteItem(title);
                 TodoNote note = new TodoNote(title,todoTextNote.getText(), TodoNoteData.getHashmapCompletedNotesCategory().get(title));
                 TodoNoteData.addData(note);
+                TodoNoteData.removeCompletedNote(note);
 
             }
         }
     }
-
 
 }
