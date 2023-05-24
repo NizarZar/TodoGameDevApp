@@ -19,7 +19,7 @@ public class Main extends Application {
         Files.createDirectories(Paths.get("C://sqlite/db"));
         createDatabase("categories.db");
         createDatabase("notes.db");
-        createDatabase("completedNotes.db");
+        createDatabase("completed_notes.db");
         createCategoriesTable();
         createNotesTable();
         createCompletedNotesTable();
@@ -36,8 +36,8 @@ public class Main extends Application {
     }
 
     private static void createCompletedNotesTable(){
-        String url = "jdbc:sqlite:C://sqlite/db/completedNotes.db";
-        String sql = "CREATE TABLE IF NOT EXISTS notes (\n" +
+        String url = "jdbc:sqlite:C://sqlite/db/completed_notes.db";
+        String sql = "CREATE TABLE IF NOT EXISTS completed_notes (\n" +
                 "noteTitle TEXT,\n" +
                 "noteText TEXT,\n" +
                 "category TEXT\n" +

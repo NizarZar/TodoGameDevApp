@@ -32,8 +32,8 @@ public class NoteTextController {
 
     private String title = "";
 
-    private Connection connect(){
-        String url = "jdbc:sqlite:C://sqlite/db/completedNotes.db";
+    private Connection connectNotes(){
+        String url = "jdbc:sqlite:C://sqlite/db/notes.db";
         Connection connection = null;
         try {
             connection= DriverManager.getConnection(url);
@@ -42,8 +42,8 @@ public class NoteTextController {
         }
         return connection;
     }
-    private Connection connectNotes(){
-        String url = "jdbc:sqlite:C://sqlite/db/notes.db";
+    private Connection connect(){
+        String url = "jdbc:sqlite:C://sqlite/db/completed_notes.db";
         Connection connection = null;
         try {
             connection= DriverManager.getConnection(url);
@@ -72,7 +72,7 @@ public class NoteTextController {
 
     public void onCompletedCheck() throws IOException {
         if(completedCheckBox.isSelected()){
-            String sql ="INSERT INTO completedNotes (noteTitle, noteText, category) VALUES(?,?,?)";
+            String sql ="INSERT INTO completed_notes (noteTitle, noteText, category) VALUES(?,?,?)";
             try {
                 Connection connection = this.connect();
                 PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -83,18 +83,16 @@ public class NoteTextController {
             } catch (SQLException e){
                 System.out.println(e.getMessage());
             }
-            MainController mainController = MainSingleton.getInstance().getMainFXML().getController();
-            mainController.deleteNoteItem(TodoNoteData.getHashmapNotesVK().get(todoTextNote.getText()));
+            System.out.println("NOTE TITLE:");
+            System.out.println(TodoNoteData.getHashmapTitleCategory().toString());
             TodoNote note = new TodoNote(title, todoTextNote.getText(),
                     TodoNoteData.getHashmapTitleCategory().get(title));
             TodoNoteData.addCompletedNote(note);
-            System.out.println("Completed notes:");
-            System.out.println(TodoNoteData.getHashmapCompletedNotes().toString());
-            System.out.println("non completed:");
-            System.out.println(TodoNoteData.getHashMapNotes().toString());
+            MainController mainController = MainSingleton.getInstance().getMainFXML().getController();
+            mainController.deleteNoteItem(title);
         } else if(!completedCheckBox.isSelected()){
             if(TodoNoteData.getHashmapCompletedNotes().containsValue(todoTextNote.getText())){
-                String sql = "DELETE FROM completedNotes" +
+                String sql = "DELETE FROM completed_notes" +
                         " WHERE noteTitle = ?" +
                         " AND noteText = ?" +
                         " AND category = ?";
@@ -125,10 +123,6 @@ public class NoteTextController {
                 TodoNoteData.addData(note);
 
             }
-            System.out.println("Completed notes:");
-            System.out.println(TodoNoteData.getHashmapCompletedNotes().toString());
-            System.out.println("non completed:");
-            System.out.println(TodoNoteData.getHashMapNotes().toString());
         }
     }
 

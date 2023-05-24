@@ -30,13 +30,6 @@ public class TodoNoteData {
             hashmapCompletedNotes.put(todoNote.getTitle(),todoNote.getText());
             hashmapCompletedNotesCategory.put(todoNote.getTitle(),todoNote.getCategory());
             hashmapCompletedNotesVK.put(todoNote.getText(),todoNote.getTitle());
-             try {
-                 hashMapNotes.remove(todoNote.getTitle(), todoNote.getText());
-                 hashmapTitleCategory.remove(todoNote.getTitle(), todoNote.getCategory());
-                 hashmapNotesVK.remove(todoNote.getText(), todoNote.getTitle());
-             } catch (Exception e){
-                 System.out.println(e.getMessage());
-             }
         }
 
     public static HashMap<String, String> getHashMapNotes() {

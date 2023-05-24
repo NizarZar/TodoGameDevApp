@@ -63,7 +63,7 @@ public class MainController implements Initializable {
     }
 
     private Connection connectCompletedNotesDB(){
-        String url = "jdbc:sqlite:C://sqlite/db/completedNotes.db";
+        String url = "jdbc:sqlite:C://sqlite/db/completed_notes.db";
         Connection connection = null;
         try {
             connection = DriverManager.getConnection(url);
@@ -203,12 +203,9 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println("Completed notes:");
-        System.out.println(TodoNoteData.getHashmapCompletedNotes().toString());
-        System.out.println(TodoNoteData.getHashMapNotes().toString());
         String sqlCategories = "SELECT * FROM categories";
         String sqlNotes = "SELECT * FROM notes";
-        String sqlCompletedNotes = "SELECT * FROM completedNotes";
+        String sqlCompletedNotes = "SELECT * FROM completed_notes";
         // check and add categories from database at launch
         try {
             Connection connection = this.connectCategoriesDB();
@@ -274,6 +271,7 @@ public class MainController implements Initializable {
             }
             listView.getItems().clear();
             listView.getItems().addAll(sortedHash.keySet());
+
         } catch (Exception e){
             try {
                 throw new Exception("Error in choice-box sorting", e);
@@ -281,6 +279,7 @@ public class MainController implements Initializable {
                 ex.printStackTrace();
             }
         }
+
         });
     }
 
