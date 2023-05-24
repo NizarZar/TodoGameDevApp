@@ -2,4 +2,9 @@ CSS styling
 Ability of dragging notes to prioritize
 Save the same order of notes given by user dragging and not by alphabetical order
 
+features would like to add:
+account authentication
+create project that contains its notes
+multiple projects
+
 
