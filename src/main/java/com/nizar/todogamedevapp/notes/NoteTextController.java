@@ -1,6 +1,8 @@
 package com.nizar.todogamedevapp.notes;
 
+import com.nizar.todogamedevapp.MainController;
 import com.nizar.todogamedevapp.MainSingleton;
+import com.nizar.todogamedevapp.todonote.TodoNote;
 import com.nizar.todogamedevapp.todonote.TodoNoteData;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,10 +10,15 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class NoteTextController {
 
@@ -20,9 +27,35 @@ public class NoteTextController {
 
     @FXML
     Button backButton;
+    @FXML
+    CheckBox completedCheckBox;
+
+    private String title = "";
+
+    private Connection connect(){
+        String url = "jdbc:sqlite:C://sqlite/db/completedNotes.db";
+        Connection connection = null;
+        try {
+            connection= DriverManager.getConnection(url);
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return connection;
+    }
+    private Connection connectNotes(){
+        String url = "jdbc:sqlite:C://sqlite/db/notes.db";
+        Connection connection = null;
+        try {
+            connection= DriverManager.getConnection(url);
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return connection;
+    }
 
     public void addText(String title){
         todoTextNote.setText(TodoNoteData.getHashMapNotes().get(title));
+        this.title = title;
         todoTextNote.setVisible(true);
     }
 
@@ -35,6 +68,68 @@ public class NoteTextController {
         stage.setScene(scene);
         stage.show();
 
+    }
+
+    public void onCompletedCheck() throws IOException {
+        if(completedCheckBox.isSelected()){
+            String sql ="INSERT INTO completedNotes (noteTitle, noteText, category) VALUES(?,?,?)";
+            try {
+                Connection connection = this.connect();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1,title);
+                preparedStatement.setString(2, todoTextNote.getText());
+                preparedStatement.setString(3,TodoNoteData.getHashmapTitleCategory().get(title));
+                preparedStatement.executeUpdate();
+            } catch (SQLException e){
+                System.out.println(e.getMessage());
+            }
+            MainController mainController = MainSingleton.getInstance().getMainFXML().getController();
+            mainController.deleteNoteItem(TodoNoteData.getHashmapNotesVK().get(todoTextNote.getText()));
+            TodoNote note = new TodoNote(title, todoTextNote.getText(),
+                    TodoNoteData.getHashmapTitleCategory().get(title));
+            TodoNoteData.addCompletedNote(note);
+            System.out.println("Completed notes:");
+            System.out.println(TodoNoteData.getHashmapCompletedNotes().toString());
+            System.out.println("non completed:");
+            System.out.println(TodoNoteData.getHashMapNotes().toString());
+        } else if(!completedCheckBox.isSelected()){
+            if(TodoNoteData.getHashmapCompletedNotes().containsValue(todoTextNote.getText())){
+                String sql = "DELETE FROM completedNotes" +
+                        " WHERE noteTitle = ?" +
+                        " AND noteText = ?" +
+                        " AND category = ?";
+                String sqlInsert ="INSERT INTO notes (noteTitle, noteText, category) VALUES(?,?,?)";
+                try {
+                    Connection connection = this.connect();
+                    PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                    preparedStatement.setString(1,title);
+                    preparedStatement.setString(2,todoTextNote.getText());
+                    preparedStatement.setString(3,TodoNoteData.getHashmapCompletedNotesCategory().get(title));
+                    preparedStatement.executeUpdate();
+                } catch (SQLException e){
+                    System.out.println(e.getMessage());
+                }
+                try {
+                    Connection connection = this.connectNotes();
+                    PreparedStatement preparedStatement = connection.prepareStatement(sqlInsert);
+                    preparedStatement.setString(1,title);
+                    preparedStatement.setString(2,todoTextNote.getText());
+                    preparedStatement.setString(3,TodoNoteData.getHashmapCompletedNotesCategory().get(title));
+                    preparedStatement.executeUpdate();
+                } catch (SQLException e){
+                    System.out.println(e.getMessage());
+                }
+                MainController mainController = MainSingleton.getInstance().getMainFXML().getController();
+                mainController.addNoteItem(title);
+                TodoNote note = new TodoNote(title,todoTextNote.getText(), TodoNoteData.getHashmapCompletedNotesCategory().get(title));
+                TodoNoteData.addData(note);
+
+            }
+            System.out.println("Completed notes:");
+            System.out.println(TodoNoteData.getHashmapCompletedNotes().toString());
+            System.out.println("non completed:");
+            System.out.println(TodoNoteData.getHashMapNotes().toString());
+        }
     }
 
 

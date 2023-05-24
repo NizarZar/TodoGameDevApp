@@ -1,6 +1,7 @@
 package com.nizar.todogamedevapp;
 
 import com.nizar.todogamedevapp.categories.CategoriesSingleton;
+import com.nizar.todogamedevapp.notes.CompletedNotesSingleton;
 import com.nizar.todogamedevapp.notes.NoteEditController;
 import com.nizar.todogamedevapp.notes.NoteTextController;
 import com.nizar.todogamedevapp.todonote.TodoNote;
@@ -61,6 +62,17 @@ public class MainController implements Initializable {
         return connection;
     }
 
+    private Connection connectCompletedNotesDB(){
+        String url = "jdbc:sqlite:C://sqlite/db/completedNotes.db";
+        Connection connection = null;
+        try {
+            connection = DriverManager.getConnection(url);
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return connection;
+    }
+
     // method for Add Note button that opens a scene to create your own note
     public void addNote(ActionEvent event) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("notes/note.fxml")));
@@ -92,15 +104,40 @@ public class MainController implements Initializable {
     }
 
     public void onCheck(ActionEvent event) throws IOException {
-        // load selected note or todo
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("notes/notetext.fxml"));
-        root = loader.load();
-        NoteTextController notesListController = loader.getController();
-        notesListController.addText(listView.getSelectionModel().getSelectedItem());
+        if (listView.getSelectionModel().isEmpty()) {
+            throw new IllegalStateException("You need to select a note");
+        } else {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("notes/notetext.fxml"));
+            root = loader.load();
+            NoteTextController notesListController = loader.getController();
+            notesListController.addText(listView.getSelectionModel().getSelectedItem());
 
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.show();
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        }
+    }
+
+    public void deleteNoteItem(String title){
+        listView.getItems().remove(title);
+        String sql = "DELETE FROM notes" +
+                " WHERE noteTitle = ?" +
+                " AND noteText = ?" +
+                " AND category = ?";
+        try {
+            Connection connection = this.connectNotesDB();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,title);
+            preparedStatement.setString(2,TodoNoteData.getHashMapNotes().get(title));
+            preparedStatement.setString(3,TodoNoteData.getHashmapTitleCategory().get(title));
+            preparedStatement.executeUpdate();
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        if(TodoNoteData.getHashMapNotes().containsKey(title) && TodoNoteData.getHashmapTitleCategory().containsKey(title)){
+            TodoNoteData.getHashMapNotes().remove(title);
+            TodoNoteData.getHashmapTitleCategory().remove(title);
+        }
     }
 
     public void deleteNoteItem(){
@@ -126,6 +163,18 @@ public class MainController implements Initializable {
             TodoNoteData.getHashMapNotes().remove(selectedItem);
             TodoNoteData.getHashmapTitleCategory().remove(selectedItem);
         }
+    }
+    public void OnOpenCompletedNotes(ActionEvent event) throws IOException{
+        root = CompletedNotesSingleton.getInstance().getRoot();
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        if(root.getScene() == null){
+            scene = new Scene(root);
+        } else {
+            scene = root.getScene();
+        }
+        stage.setTitle("Completed Notes");
+        stage.setScene(scene);
+        stage.show();
     }
     public void onOpenCategories(ActionEvent event) throws IOException {
         root = CategoriesSingleton.getInstance().getRoot();
@@ -154,8 +203,12 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        System.out.println("Completed notes:");
+        System.out.println(TodoNoteData.getHashmapCompletedNotes().toString());
+        System.out.println(TodoNoteData.getHashMapNotes().toString());
         String sqlCategories = "SELECT * FROM categories";
         String sqlNotes = "SELECT * FROM notes";
+        String sqlCompletedNotes = "SELECT * FROM completedNotes";
         // check and add categories from database at launch
         try {
             Connection connection = this.connectCategoriesDB();
@@ -175,6 +228,17 @@ public class MainController implements Initializable {
             while(resultSet.next()){
                 TodoNote todoNote = new TodoNote(resultSet.getString("noteTitle"),resultSet.getString("noteText"),resultSet.getString("category"));
                 TodoNoteData.addData(todoNote);
+            }
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        try {
+            Connection connection = this.connectCompletedNotesDB();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sqlCompletedNotes);
+            while(resultSet.next()){
+                TodoNote completedNote = new TodoNote(resultSet.getString("noteTitle"),resultSet.getString("noteText"),resultSet.getString("category"));
+                TodoNoteData.addCompletedNote(completedNote);
             }
         } catch (SQLException e){
             System.out.println(e.getMessage());

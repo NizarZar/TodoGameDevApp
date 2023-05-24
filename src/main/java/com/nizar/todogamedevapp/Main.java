@@ -19,8 +19,10 @@ public class Main extends Application {
         Files.createDirectories(Paths.get("C://sqlite/db"));
         createDatabase("categories.db");
         createDatabase("notes.db");
+        createDatabase("completedNotes.db");
         createCategoriesTable();
         createNotesTable();
+        createCompletedNotesTable();
         Parent root = MainSingleton.getInstance().getRoot();
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -31,6 +33,22 @@ public class Main extends Application {
            // event.consume();
             //onExit(stage);
        // });
+    }
+
+    private static void createCompletedNotesTable(){
+        String url = "jdbc:sqlite:C://sqlite/db/completedNotes.db";
+        String sql = "CREATE TABLE IF NOT EXISTS notes (\n" +
+                "noteTitle TEXT,\n" +
+                "noteText TEXT,\n" +
+                "category TEXT\n" +
+                ");";
+        try {
+            Connection connection = DriverManager.getConnection(url);
+            Statement statement = connection.createStatement();
+            statement.execute(sql);
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     private static void createNotesTable(){
