@@ -136,6 +136,7 @@ public class MainController implements Initializable {
         }
         TodoNote removeNote = new TodoNote(title,TodoNoteData.getHashMapNotes().get(title),TodoNoteData.getHashmapTitleCategory().get(title));
         TodoNoteData.removeData(removeNote);
+        TodoNoteData.removeCompletedNote(removeNote);
     }
 
     public void deleteNoteItem(){
@@ -159,6 +160,7 @@ public class MainController implements Initializable {
         }
         TodoNote removeNote = new TodoNote(selectedItem,TodoNoteData.getHashMapNotes().get(selectedItem),TodoNoteData.getHashmapTitleCategory().get(selectedItem));
         TodoNoteData.removeData(removeNote);
+        TodoNoteData.removeCompletedNote(removeNote);
     }
     public void OnOpenCompletedNotes(ActionEvent event) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("notes/completedNotes.fxml")));
@@ -191,6 +193,7 @@ public class MainController implements Initializable {
         stage.show();
     }
 
+    // initialization
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         String sqlCategories = "SELECT * FROM categories";
@@ -230,7 +233,7 @@ public class MainController implements Initializable {
         } catch (SQLException e){
             System.out.println(e.getMessage());
         }
-        // adding all notes
+        // adding all notes from the hashmap
         listView.getItems().addAll(TodoNoteData.getHashMapNotes().keySet());
         // adding all categories to choiceboxList and the default category "all"
         choiceSortCategories.getItems().add("All");

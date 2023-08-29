@@ -63,6 +63,8 @@ public class NoteTextController{
         todoTextNote.setVisible(true);
     }
 
+
+    // back button
     public void onBack(ActionEvent event) throws IOException {
         Parent root = MainSingleton.getInstance().getRoot();
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -75,6 +77,7 @@ public class NoteTextController{
     }
 
 
+    // completed note check
     public void onCompletedCheck() throws IOException {
         if(completedCheckBox.isSelected()){
             String sql ="INSERT INTO completed_notes (noteTitle, noteText, category) VALUES(?,?,?)";
